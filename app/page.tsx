@@ -21,13 +21,13 @@ export default async function Home() {
           />
         </div>
         <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">Discover Utah's Best Slopes</h1>
-          <p className="text-xl md:text-2xl mb-8">Experience the Greatest Snow on Earth</p>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6">Your Journey to Perfect Powder Starts Here</h1>
+          <p className="text-xl md:text-2xl mb-8">From beginner slopes to expert terrain, find your perfect ski adventure</p>
           <Link 
             href="/resorts" 
             className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all"
           >
-            Explore Utah Resorts
+            Start Your Adventure
           </Link>
         </div>
       </section>
