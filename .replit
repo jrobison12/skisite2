@@ -1,0 +1,9 @@
+run = "npm run dev"
+hidden = [".build", ".config"]
+
+[nix]
+channel = "stable-22_11"
+
+[deployment]
+run = ["sh", "-c", "npm run dev"]
+deploymentTarget = "cloudrun" 
