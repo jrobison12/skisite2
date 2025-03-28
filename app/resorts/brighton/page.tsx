@@ -13,7 +13,7 @@ export default async function BrightonResort() {
       <div className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center">
         <div className="relative w-[800px] h-[400px] opacity-5">
           <Image
-            src="/logos/brighton logo.jpg"
+            src="/logos/brighton.png"
             alt="Brighton Resort Logo Background"
             fill
             className="object-contain"

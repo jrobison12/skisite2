@@ -1,31 +1,34 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getAllResortsWeather, ResortWeatherData } from '../services/weather';
+import { getAllResortsWeather, type ResortWeatherData } from '../services/weather';
+
+// Cache duration in milliseconds (30 minutes)
+const CACHE_DURATION = 30 * 60 * 1000;
 
 // Client-side cache
-let clientCache: { data: ResortWeatherData | null; timestamp: number } = {
-  data: null,
-  timestamp: 0
-};
-
-const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
+let clientCache: { data: ResortWeatherData; timestamp: number } | null = null;
 
 export function useWeatherData() {
   const [weatherData, setWeatherData] = useState<ResortWeatherData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    let isMounted = true;
+
+    async function fetchWeatherData() {
       try {
         // Check client-side cache first
-        if (clientCache.data && (Date.now() - clientCache.timestamp) < CACHE_DURATION) {
-          setWeatherData(clientCache.data);
-          setLoading(false);
+        if (clientCache && (Date.now() - clientCache.timestamp) < CACHE_DURATION) {
+          if (isMounted) {
+            setWeatherData(clientCache.data);
+            setIsLoading(false);
+          }
           return;
         }
 
+        // If no cache or expired, fetch new data
         const data = await getAllResortsWeather();
         
         // Update client-side cache
@@ -33,17 +36,25 @@ export function useWeatherData() {
           data,
           timestamp: Date.now()
         };
-        
-        setWeatherData(data);
-      } catch (err) {
-        setError(err as Error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchData();
+        if (isMounted) {
+          setWeatherData(data);
+          setIsLoading(false);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError(err as Error);
+          setIsLoading(false);
+        }
+      }
+    }
+
+    fetchWeatherData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  return { weatherData, loading, error };
+  return { weatherData, isLoading, error };
 } 

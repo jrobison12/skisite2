@@ -11,37 +11,34 @@ const RESORT_COORDINATES = {
 
 const BASE_URL = 'https://api.open-meteo.com/v1';
 
-export interface WeatherData {
-  current: {
-    temperature_2m: number;
-    apparent_temperature: number;
-    wind_speed_10m: number;
-    wind_direction_10m: number;
-    precipitation: number;
-    relative_humidity_2m: number;
-    visibility: number;
-    time: string;
-    interval: number;
-    weather_code: number;
-  };
-  hourly: {
-    snowfall: number[];
-    temperature: number[];
-    time: string[];
-    wind_speed_10m: number[];
-    wind_direction_10m: number[];
-    precipitation: number[];
-    relative_humidity_2m: number[];
-    visibility: number[];
-  };
-  daily: {
-    snowfall: number[];
-    date: string[];
-    temperature_2m_max: number[];
-    temperature_2m_min: number[];
-    precipitation_sum: number[];
-    wind_speed_10m_max: number[];
-  };
+interface CurrentWeather {
+  temperature_2m: number;
+  apparent_temperature: number;
+  wind_speed_10m: number;
+  precipitation: number;
+  time: string;
+  interval: number;
+  weather_code: number;
+}
+
+interface HourlyWeather {
+  temperature: number[];
+  snowfall: number[];
+  time: string[];
+  precipitation: number[];
+}
+
+interface DailyWeather {
+  date: string[];
+  snowfall: number[];
+  temperature_2m_max: number[];
+  temperature_2m_min: number[];
+}
+
+interface WeatherData {
+  current: CurrentWeather;
+  hourly: HourlyWeather;
+  daily: DailyWeather;
 }
 
 export interface ResortWeatherData {
@@ -65,8 +62,8 @@ interface WeatherCache {
   timestamp: number;
 }
 
-// Cache duration in milliseconds (15 minutes)
-const CACHE_DURATION = 15 * 60 * 1000;
+// Cache duration in milliseconds (30 minutes)
+const CACHE_DURATION = 30 * 60 * 1000;
 
 // In-memory cache
 let weatherCache: WeatherCache | null = null;
@@ -75,7 +72,7 @@ let weatherCache: WeatherCache | null = null;
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Helper function to retry failed requests with exponential backoff
-async function fetchWithRetry(url: string, maxRetries = 3, initialDelayMs = 2000): Promise<Response> {
+async function fetchWithRetry(url: string, maxRetries = 3, initialDelayMs = 500): Promise<Response> {
   let lastError: Error | null = null;
   
   for (let attempt = 0; attempt < maxRetries; attempt++) {
@@ -86,7 +83,11 @@ async function fetchWithRetry(url: string, maxRetries = 3, initialDelayMs = 2000
         await delay(delayTime);
       }
       
-      const response = await fetch(url);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+      
+      const response = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeoutId);
       
       if (response.ok) {
         return response;
@@ -117,82 +118,113 @@ export async function getResortWeather(resortName: string): Promise<WeatherData>
     // Get current date in ISO format
     const today = new Date();
     const startDate = new Date(today);
-    startDate.setDate(today.getDate() - 3);
+    startDate.setDate(today.getDate() - 1);
     const endDate = new Date(today);
-    endDate.setDate(today.getDate() + 3);
+    endDate.setDate(today.getDate() + 1);
 
     // Format dates for API
     const start_date = startDate.toISOString().split('T')[0];
     const end_date = endDate.toISOString().split('T')[0];
 
-    // Get current weather, hourly forecast, and daily forecast with elevation
+    // Optimized API request with fewer parameters and data points
     const url = `${BASE_URL}/forecast?` +
       `latitude=${coords.lat}&longitude=${coords.lon}&` +
-      `current=temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m,precipitation,relative_humidity_2m,visibility,weather_code&` +
-      `hourly=temperature_2m,snowfall,wind_speed_10m,wind_direction_10m,precipitation,relative_humidity_2m,visibility&` +
-      `daily=snowfall_sum,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max&` +
+      `current=temperature_2m,apparent_temperature,wind_speed_10m,precipitation,weather_code&` +
+      `hourly=temperature_2m,snowfall,precipitation&` +
+      `daily=snowfall_sum,temperature_2m_max,temperature_2m_min&` +
       `timezone=America/Denver&` +
       `start_date=${start_date}&` +
       `end_date=${end_date}`;
 
-    console.log(`Fetching weather for ${resortName} with URL:`, url);
-
     const response = await fetchWithRetry(url);
     const data = await response.json();
-    
-    // Debug logging
-    console.log(`Weather data for ${resortName}:`, {
-      current: {
-        ...data.current,
-        wind_speed_10m: {
-          raw: data.current.wind_speed_10m,
-          mph: data.current.wind_speed_10m * 2.23694
-        }
-      },
-      hourly: {
-        snowfall: data.hourly.snowfall.slice(0, 24),
-        temperature: data.hourly.temperature_2m.slice(0, 24)
-      },
-      daily: {
-        snowfall: data.daily.snowfall_sum,
-        date: data.daily.time
-      }
-    });
 
+    // Process and return only the data we need
     return {
       current: {
         temperature_2m: data.current.temperature_2m,
         apparent_temperature: data.current.apparent_temperature,
         wind_speed_10m: data.current.wind_speed_10m,
-        wind_direction_10m: data.current.wind_direction_10m,
         precipitation: data.current.precipitation,
-        relative_humidity_2m: data.current.relative_humidity_2m,
-        visibility: data.current.visibility,
         time: data.current.time,
         interval: data.current.interval,
         weather_code: data.current.weather_code
       },
       hourly: {
-        temperature: data.hourly.temperature_2m,
-        snowfall: data.hourly.snowfall,
-        time: data.hourly.time,
-        wind_speed_10m: data.hourly.wind_speed_10m,
-        wind_direction_10m: data.hourly.wind_direction_10m,
-        precipitation: data.hourly.precipitation,
-        relative_humidity_2m: data.hourly.relative_humidity_2m,
-        visibility: data.hourly.visibility
+        temperature: data.hourly.temperature_2m.slice(0, 24), // Only keep 24 hours
+        snowfall: data.hourly.snowfall.slice(0, 24),
+        time: data.hourly.time.slice(0, 24),
+        precipitation: data.hourly.precipitation.slice(0, 24)
       },
       daily: {
         date: data.daily.time,
         snowfall: data.daily.snowfall_sum,
         temperature_2m_max: data.daily.temperature_2m_max,
-        temperature_2m_min: data.daily.temperature_2m_min,
-        precipitation_sum: data.daily.precipitation_sum,
-        wind_speed_10m_max: data.daily.wind_speed_10m_max
+        temperature_2m_min: data.daily.temperature_2m_min
       }
     };
   } catch (error) {
     console.error(`Error fetching weather for ${resortName}:`, error);
+    throw error;
+  }
+}
+
+// Batch size for parallel requests
+const BATCH_SIZE = 3;
+
+export async function getAllResortsWeather(): Promise<ResortWeatherData> {
+  // Check cache first
+  if (weatherCache && (Date.now() - weatherCache.timestamp) < CACHE_DURATION) {
+    console.log('Returning cached weather data');
+    return weatherCache.data;
+  }
+
+  const resorts = Object.keys(RESORT_COORDINATES) as (keyof typeof RESORT_COORDINATES)[];
+  
+  try {
+    // Process resorts in batches to avoid overwhelming the API
+    const weatherData = resorts.reduce((acc, resort) => {
+      acc[resort] = null as any; // Initialize with null, will be filled in batches
+      return acc;
+    }, {} as ResortWeatherData);
+    
+    for (let i = 0; i < resorts.length; i += BATCH_SIZE) {
+      const batch = resorts.slice(i, i + BATCH_SIZE);
+      const batchPromises = batch.map(async (resort, index) => {
+        // Small delay between requests in the same batch
+        if (index > 0) {
+          await delay(100);
+        }
+        return getResortWeather(resort);
+      });
+
+      const batchResults = await Promise.all(batchPromises);
+      
+      // Add batch results to weatherData
+      batch.forEach((resort, index) => {
+        weatherData[resort] = batchResults[index];
+      });
+
+      // Add delay between batches
+      if (i + BATCH_SIZE < resorts.length) {
+        await delay(300);
+      }
+    }
+
+    // Update cache with new data
+    weatherCache = {
+      data: weatherData,
+      timestamp: Date.now()
+    };
+
+    return weatherData;
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+    // If we have cached data, use it as fallback
+    if (weatherCache?.data) {
+      console.log('Using cached data as fallback');
+      return weatherCache.data;
+    }
     throw error;
   }
 }
@@ -227,44 +259,4 @@ function getWeatherInfo(code: number): { description: string; icon: string } {
   };
 
   return weatherCodes[code] || { description: 'Unknown', icon: '01d' };
-}
-
-export async function getAllResortsWeather(): Promise<ResortWeatherData> {
-  // Check cache first
-  if (weatherCache && (Date.now() - weatherCache.timestamp) < CACHE_DURATION) {
-    console.log('Returning cached weather data');
-    return weatherCache.data;
-  }
-
-  const resorts = Object.keys(RESORT_COORDINATES) as (keyof typeof RESORT_COORDINATES)[];
-  const weatherData: Partial<ResortWeatherData> = {};
-
-  // Fetch weather data for each resort with delay between requests
-  for (const resort of resorts) {
-    try {
-      // Add delay between requests to avoid rate limiting
-      if (Object.keys(weatherData).length > 0) {
-        await delay(1000); // 1 second delay between requests
-      }
-      
-      const data = await getResortWeather(resort);
-      weatherData[resort] = data;
-      
-    } catch (error) {
-      console.error(`Error fetching weather for ${resort}:`, error);
-      // If we have cached data for this resort, use it as fallback
-      if (weatherCache?.data[resort]) {
-        console.log(`Using cached data for ${resort}`);
-        weatherData[resort] = weatherCache.data[resort];
-      }
-    }
-  }
-
-  // Update cache with new data
-  weatherCache = {
-    data: weatherData as ResortWeatherData,
-    timestamp: Date.now()
-  };
-
-  return weatherData as ResortWeatherData;
 } 
