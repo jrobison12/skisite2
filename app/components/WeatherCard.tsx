@@ -39,6 +39,19 @@ function getWeatherIcon(code: number): string {
   return weatherCodes[code] || 'cloudy';
 }
 
+function getResortLogo(resort: string): string {
+  const logoMap: Record<string, string> = {
+    'Alta': '/logos/alta.jpg',
+    'Brighton': '/logos/brighton.png',
+    'Deer Valley': '/logos/deer valley.png',
+    'Park City': '/logos/park city.png',
+    'Snowbird': '/logos/Snowbird Logo.png',
+    'Solitude': '/logos/solitude.png',
+    'Snowbasin': '/logos/snowbasin-logo.png'
+  };
+  return logoMap[resort] || '';
+}
+
 export default function WeatherCard({ resort, weather, medal, topThree }: WeatherCardProps) {
   const sharedScrollRef = useRef<HTMLDivElement>(null);
   
@@ -107,7 +120,7 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
       )}
       <div className="relative z-10">
         {medal && (
-          <div className="absolute top-4 right-4 text-2xl" title={
+          <div className="absolute top-4 right-4 text-2xl z-20" title={
             medal === '🥇' ? '24hr Snow Champion - Most Snow in the Last 24 Hours!' :
             medal === '🥈' ? '24hr Snow Silver Medalist - Second Most Snow in the Last 24 Hours' :
             '24hr Snow Bronze Medalist - Third Most Snow in the Last 24 Hours'
@@ -120,7 +133,20 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
             ❄️
           </div>
         )}
-        <h2 className="text-2xl font-bold mb-4">{resort}</h2>
+        <div className="relative">
+          <div className="absolute top-2 right-2 w-24 h-24 flex items-center justify-center">
+            <Image
+              src={getResortLogo(resort)}
+              alt={`${resort} logo`}
+              width={96}
+              height={96}
+              className={`object-contain max-w-full max-h-full ${
+                resort === 'Alta' ? 'rounded-full' : ''
+              }`}
+            />
+          </div>
+          <h2 className="text-2xl font-bold mb-4 pr-28">{resort}</h2>
+        </div>
         
         {/* Current Conditions */}
         <div className="mb-4">

@@ -105,7 +105,9 @@ export default function WeatherPage() {
           sizes="100vw"
         />
       </div>
-      <UdotCautionBanner weatherData={weatherData} />
+      <UdotCautionBanner isPowderAlertActive={Object.values(weatherData).some(data => 
+        data.hourly.snowfall.slice(0, 24).reduce((sum: number, val: number) => sum + val, 0) > 0
+      )} />
       <div className="container mx-auto px-4 py-8 relative z-10">
         <h1 className="text-4xl font-bold mb-8">Resort Weather Conditions</h1>
         <p className="text-gray-600 mb-12">Current weather conditions at ski resorts near Salt Lake City. Updated in real-time to help you plan your perfect ski day.</p>

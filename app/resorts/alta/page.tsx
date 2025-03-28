@@ -1,10 +1,11 @@
+'use client';
+
 import Image from 'next/image';
-import { getAllResortsWeather } from '../../services/weather';
-import { ResortWeatherData } from '../../types/weather';
+import { useWeatherData } from '../../hooks/useWeatherData';
 import DifficultyIcon from '../../components/DifficultyIcon';
 
-export default async function AltaResort() {
-  const weatherData = await getAllResortsWeather();
+export default function AltaResort() {
+  const { weatherData, loading } = useWeatherData();
   const altaWeather = weatherData && 'Alta' in weatherData ? weatherData.Alta : null;
 
   return (
@@ -16,7 +17,7 @@ export default async function AltaResort() {
             src="/logos/alta.jpg"
             alt="Alta Ski Area Logo Background"
             fill
-            className="object-contain"
+            className="object-contain rounded-full"
             priority
           />
         </div>
@@ -72,8 +73,10 @@ export default async function AltaResort() {
 
             <h2 className="text-3xl font-bold mb-8 text-center">Current Conditions</h2>
             <div className="bg-white rounded-lg shadow-lg p-6">
-              {!altaWeather ? (
-                <p className="text-gray-600 text-center">Loading weather data...</p>
+              {loading || !altaWeather ? (
+                <div className="flex justify-center items-center min-h-[200px]">
+                  <div className="animate-pulse text-gray-600">Loading weather data...</div>
+                </div>
               ) : (
                 <div className="grid md:grid-cols-3 gap-8">
                   <div>

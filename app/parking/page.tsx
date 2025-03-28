@@ -89,14 +89,14 @@ export default function ParkingPage() {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {resortParking.map((resort) => (
-            <div key={resort.name} className="bg-white/50 backdrop-blur-sm rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 ring-2 ring-blue-500">
+            <div key={resort.name} className="bg-white/50 backdrop-blur-sm rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300">
               <div className="flex items-center gap-4 mb-3">
                 <div className="relative w-16 h-16">
                   <Image
                     src={resort.logo}
                     alt={`${resort.name} logo`}
                     fill
-                    className="object-contain"
+                    className={`object-contain ${resort.name === 'Alta' ? 'rounded-full' : ''}`}
                   />
                 </div>
                 <h2 className="text-2xl font-bold">{resort.name}</h2>
@@ -114,7 +114,7 @@ export default function ParkingPage() {
           ))}
         </div>
 
-        <div className="mt-12 bg-white/50 backdrop-blur-sm rounded-lg p-6 ring-2 ring-blue-500">
+        <div className="mt-12 bg-white/50 backdrop-blur-sm rounded-lg p-6">
           <h2 className="text-2xl font-bold mb-4">Important Notes</h2>
           <ul className="list-disc list-inside space-y-2 text-gray-700">
             <li>Parking policies and requirements vary by resort</li>

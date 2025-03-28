@@ -59,60 +59,54 @@ function celsiusToFahrenheit(celsius: number): number {
   return (celsius * 9/5) + 32;
 }
 
+// Cache interface
+interface WeatherCache {
+  data: ResortWeatherData;
+  timestamp: number;
+}
+
+// Cache duration in milliseconds (15 minutes)
+const CACHE_DURATION = 15 * 60 * 1000;
+
+// In-memory cache
+let weatherCache: WeatherCache | null = null;
+
 // Helper function to add delay between requests
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Helper function to retry failed requests
-async function fetchWithRetry(url: string, maxRetries = 3, initialDelayMs = 1000): Promise<Response> {
-  let lastResponse: Response | null = null;
+// Helper function to retry failed requests with exponential backoff
+async function fetchWithRetry(url: string, maxRetries = 3, initialDelayMs = 2000): Promise<Response> {
+  let lastError: Error | null = null;
   
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
-      const response = await fetch(url);
-      lastResponse = response;
+      // Add delay between attempts, increasing with each retry
+      if (attempt > 0) {
+        const delayTime = initialDelayMs * Math.pow(2, attempt - 1);
+        await delay(delayTime);
+      }
       
-      // If the request was successful, return the response
+      const response = await fetch(url);
+      
       if (response.ok) {
         return response;
       }
       
-      // If we hit the rate limit
       if (response.status === 429) {
-        // If this is our last attempt, break out of the loop
-        if (attempt === maxRetries - 1) {
-          break;
-        }
-        
-        // Otherwise wait and continue
-        const delayTime = initialDelayMs * Math.pow(2, attempt);
-        console.log(`Rate limited, waiting ${delayTime}ms before retry ${attempt + 1}/${maxRetries}`);
-        await delay(delayTime);
+        console.log(`Rate limited on attempt ${attempt + 1}, waiting before retry...`);
         continue;
       }
       
-      // For other error status codes, break immediately
-      break;
+      throw new Error(`HTTP error! status: ${response.status}`);
     } catch (error) {
-      // If this is our last attempt, throw the error
+      lastError = error as Error;
       if (attempt === maxRetries - 1) {
         throw error;
       }
-      
-      // Otherwise wait and try again
-      const delayTime = initialDelayMs * Math.pow(2, attempt);
-      console.log(`Request failed, waiting ${delayTime}ms before retry ${attempt + 1}/${maxRetries}`);
-      await delay(delayTime);
     }
   }
   
-  // If we got here, we either:
-  // 1. Hit a non-429 error status
-  // 2. Hit max retries on rate limit
-  // 3. Had an unexpected error
-  if (lastResponse) {
-    throw new Error(`HTTP error! status: ${lastResponse.status}`);
-  }
-  throw new Error('Failed to fetch after max retries');
+  throw lastError || new Error('Failed to fetch after max retries');
 }
 
 export async function getResortWeather(resortName: string): Promise<WeatherData> {
@@ -235,56 +229,42 @@ function getWeatherInfo(code: number): { description: string; icon: string } {
   return weatherCodes[code] || { description: 'Unknown', icon: '01d' };
 }
 
-// Cache for resort weather data
-interface WeatherCache {
-  data: WeatherData;
-  timestamp: number;
-}
-
-const weatherCache = new Map<string, WeatherCache>();
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
-
 export async function getAllResortsWeather(): Promise<ResortWeatherData> {
-  const resorts = Object.keys(RESORT_COORDINATES) as Array<keyof typeof RESORT_COORDINATES>;
-  const weatherData = {} as ResortWeatherData;
-  
-  // Process all resorts in parallel
-  await Promise.all(resorts.map(async (resort) => {
-    try {
-      // Check cache first
-      const cached = weatherCache.get(resort);
-      const now = Date.now();
-      
-      if (cached && (now - cached.timestamp) < CACHE_DURATION) {
-        console.log(`Using cached data for ${resort}`);
-        weatherData[resort] = cached.data;
-        return;
-      }
+  // Check cache first
+  if (weatherCache && (Date.now() - weatherCache.timestamp) < CACHE_DURATION) {
+    console.log('Returning cached weather data');
+    return weatherCache.data;
+  }
 
-      // Fetch fresh data
-      const data = await getResortWeather(resort);
-      
-      // Update cache
-      weatherCache.set(resort, {
-        data,
-        timestamp: now
-      });
-      
-      weatherData[resort] = data;
-    } catch (error) {
-      console.error(`Failed to fetch weather for ${resort}:`, error);
-      
-      // If we have cached data, use it even if expired
-      const cached = weatherCache.get(resort);
-      if (cached) {
-        console.log(`Using expired cache for ${resort} due to error`);
-        weatherData[resort] = cached.data;
-        return;
+  const resorts = Object.keys(RESORT_COORDINATES) as (keyof typeof RESORT_COORDINATES)[];
+  const weatherData: Partial<ResortWeatherData> = {};
+
+  // Fetch weather data for each resort with delay between requests
+  for (const resort of resorts) {
+    try {
+      // Add delay between requests to avoid rate limiting
+      if (Object.keys(weatherData).length > 0) {
+        await delay(1000); // 1 second delay between requests
       }
       
-      throw error;
+      const data = await getResortWeather(resort);
+      weatherData[resort] = data;
+      
+    } catch (error) {
+      console.error(`Error fetching weather for ${resort}:`, error);
+      // If we have cached data for this resort, use it as fallback
+      if (weatherCache?.data[resort]) {
+        console.log(`Using cached data for ${resort}`);
+        weatherData[resort] = weatherCache.data[resort];
+      }
     }
-  }));
-  
-  return weatherData;
+  }
+
+  // Update cache with new data
+  weatherCache = {
+    data: weatherData as ResortWeatherData,
+    timestamp: Date.now()
+  };
+
+  return weatherData as ResortWeatherData;
 } 
