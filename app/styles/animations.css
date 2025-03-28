@@ -1,0 +1,55 @@
+@keyframes slide-up {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes snowflake-spin-scale {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  40% {
+    transform: rotate(180deg) scale(1);
+  }
+  45% {
+    transform: rotate(180deg) scale(1.4);
+  }
+  50% {
+    transform: rotate(180deg) scale(1);
+  }
+  90% {
+    transform: rotate(360deg) scale(1);
+  }
+  95% {
+    transform: rotate(360deg) scale(1.4);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out forwards;
+}
+
+.animate-snowflake {
+  animation: snowflake-spin-scale 4s cubic-bezier(0.1, 0, 0.3, 1) infinite;
+} 

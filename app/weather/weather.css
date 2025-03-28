@@ -1,0 +1,33 @@
+@keyframes snowfall {
+  0% {
+    transform: translateY(var(--start-y)) translateX(0) rotate(0deg);
+    opacity: var(--start-opacity);
+  }
+  100% {
+    transform: translateY(var(--fall-distance)) translateX(var(--drift)) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.snowflake {
+  animation: snowfall linear infinite;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 0;
+  animation-duration: var(--fall-duration);
+  pointer-events: none;
+  color: #3b82f6;
+  opacity: 0;
+  --start-y: 0px;
+  --drift: 0px;
+  --fall-duration: 5s;
+  --start-opacity: 0.6;
+  --fall-distance: 100%;
+}
+
+.snowflake-container {
+  z-index: 1;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+} 

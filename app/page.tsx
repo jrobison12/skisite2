@@ -1,143 +1,274 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { IoSnowSharp } from "react-icons/io5";
 import { getAllResortsWeather } from './services/weather';
 import WeatherWidget from './components/WeatherWidget';
+import FadingDivider from './components/FadingDivider';
 
 export default async function Home() {
   // Fetch weather data for all resorts
   const weatherData = await getAllResortsWeather();
 
   return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/hero-ski.jpg"
-            alt="Skiing in Utah mountains"
-            fill
-            className="object-cover brightness-50"
-            priority
-          />
-        </div>
-        <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">Your Journey to Perfect Powder Starts Here</h1>
-          <p className="text-xl md:text-2xl mb-8">From beginner slopes to expert terrain, find your perfect ski adventure</p>
-          <Link 
-            href="/resorts" 
-            className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all"
-          >
-            Start Your Adventure
-          </Link>
-        </div>
-      </section>
+    <main className="min-h-screen relative">
+      {/* Background Image */}
+      <div className="fixed inset-0 z-0">
+        <Image
+          src="/background.jpeg"
+          alt="Utah ski terrain background"
+          fill
+          className="object-cover opacity-30"
+          priority
+          quality={100}
+        />
+      </div>
+      
+      {/* Content with relative positioning */}
+      <div className="relative z-10">
+        {/* Hero Section */}
+        <section className="relative h-[70vh] flex items-center justify-center text-center px-4">
+          <div className="max-w-4xl space-y-6 animate-fade-in relative p-16">
+            {/* Subtle gradient background for hero */}
+            <div className="absolute inset-0 -inset-x-8 bg-gradient-radial from-white/60 via-white/40 to-transparent blur-lg"></div>
+            
+            <h1 className="font-playfair text-6xl md:text-7xl font-bold mb-6 text-gray-900 tracking-tight relative">
+              <span className="block animate-slide-up opacity-0 [animation-delay:200ms] relative">
+                <span className="snow-text text-blue-600">
+                  Best Snow on Earth
+                  <div className="icicle"></div>
+                  <div className="icicle"></div>
+                  <div className="icicle"></div>
+                  <div className="icicle"></div>
+                  <div className="icicle"></div>
+                  <div className="icicle"></div>
+                  <div className="icicle"></div>
+                </span>
+                <span className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></span>
+              </span>
+            </h1>
+            <p className="text-lg md:text-xl text-gray-600 text-center max-w-3xl mx-auto mb-16 animate-slide-up opacity-0 [animation-delay:400ms]">
+              Your comprehensive guide to Utah's legendary ski resorts, from the deep powder of Little Cottonwood Canyon to the diverse terrain of Park City.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in opacity-0 [animation-delay:1000ms]">
+              <Link 
+                href="/weather" 
+                className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl font-montserrat tracking-wide"
+              >
+                Check Conditions
+              </Link>
+              <Link 
+                href="/resorts" 
+                className="bg-white/50 backdrop-blur-sm text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/60 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl font-montserrat tracking-wide"
+              >
+                Explore Resorts
+              </Link>
+              <Link 
+                href="/parking" 
+                className="bg-white/50 backdrop-blur-sm text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/60 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl font-montserrat tracking-wide"
+              >
+                Reserve Parking
+              </Link>
+            </div>
+          </div>
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <IoSnowSharp className="text-blue-600 w-16 h-16 opacity-80 animate-snowflake" />
+          </div>
+        </section>
 
-      {/* Featured Resorts */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Utah's Premier Resorts</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: 'Park City',
-                description: 'Home to the largest ski resort in the United States, featuring over 7,300 acres of skiable terrain.'
-              },
-              {
-                name: 'Snowbird',
-                description: 'Known for its steep terrain and abundant snowfall, offering some of the best powder skiing in Utah.'
-              },
-              {
-                name: 'Deer Valley',
-                description: 'Luxury resort famous for its perfectly groomed runs and exceptional service.'
-              }
-            ].map((resort) => (
-              <div key={resort.name} className="bg-white rounded-lg overflow-hidden shadow-lg">
-                <div className="relative h-64">
-                  <Image
-                    src={`/${resort.name.toLowerCase().replace(' ', '-')}.jpg`}
-                    alt={resort.name}
-                    fill
-                    className="object-cover"
+        <FadingDivider />
+
+        {/* Featured Resorts */}
+        <section className="pb-8 backdrop-blur-sm">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center mb-12">
+              <div className="relative py-4 inline-block">
+                <div className="absolute -inset-4 bg-gradient-radial from-white/50 via-white/30 to-transparent blur-lg"></div>
+                <div className="relative">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                  <h2 className="font-playfair text-4xl font-bold text-gray-900 relative">
+                    <span className="relative inline-block">
+                      Featured Resorts
+                      <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
+                    </span>
+                  </h2>
+                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  name: 'Brighton',
+                  description: 'Known for its night skiing, terrain parks, and laid-back atmosphere. Perfect for all skill levels with 1,050 acres of terrain and Utah\'s best night riding with 30 lit trails.',
+                  image: '/brighton.jpg',
+                  href: '/resorts/brighton'
+                },
+                {
+                  name: 'Alta',
+                  description: 'Legendary ski-only resort famous for its deep powder snow and challenging terrain. Over 2,600 acres of skiable terrain.',
+                  image: '/alta.jpg',
+                  href: '/resorts/alta'
+                },
+                {
+                  name: 'Snowbird',
+                  description: 'Year-round resort offering steep terrain, deep powder, and the longest ski season in Utah. Features 2,500 acres of diverse terrain.',
+                  image: '/snowbird.jpg',
+                  href: '/resorts/snowbird'
+                }
+              ].map((resort) => (
+                <Link
+                  href={resort.href}
+                  key={resort.name}
+                  className="group block bg-white/50 backdrop-blur-sm rounded-lg overflow-hidden transition-all duration-300 ease-out hover:-translate-y-1 transform-gpu shadow-md hover:shadow-2xl"
+                >
+                  <div className="relative h-64">
+                    <Image
+                      src={resort.image}
+                      alt={resort.name}
+                      fill
+                      className="object-cover"
+                      quality={100}
+                      priority
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-2xl font-bold mb-2">{resort.name}</h3>
+                    <p className="text-gray-600 mb-4">{resort.description}</p>
+                    <span className="text-blue-500 group-hover:text-blue-600 font-semibold transition-colors">
+                      Learn More →
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Equipment Section */}
+        <section className="py-12 backdrop-blur-sm">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center mb-12">
+              <div className="relative py-4 inline-block">
+                <div className="absolute -inset-4 bg-gradient-radial from-white/50 via-white/30 to-transparent blur-lg"></div>
+                <div className="relative">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                  <h2 className="font-playfair text-4xl font-bold text-gray-900 relative">
+                    <span className="relative inline-block">
+                      Essential Gear
+                      <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
+                    </span>
+                  </h2>
+                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                {[
+                  { name: 'Skis', url: '/skis.jpg', id: 'skis' },
+                  { name: 'Boots', url: '/boots.jpg', id: 'boots' },
+                  { name: 'Helmet', url: '/helmet.jpg', id: 'helmet' },
+                  { name: 'Goggles', url: '/goggle.jpg', id: 'goggles', position: 'center 60%' }
+                ].map((item) => (
+                  <div key={item.name} className="text-center">
+                    <Link 
+                      href={`/gear#${item.id}`}
+                      className="group block w-56 h-56 mx-auto bg-white/50 backdrop-blur-sm rounded-full overflow-hidden transition-all duration-300 ease-out hover:-translate-y-1 transform-gpu shadow-md hover:shadow-2xl"
+                    >
+                      <div className="relative h-full w-full bg-gradient-to-b from-gray-100 to-gray-200">
+                        <div className="absolute inset-0 backdrop-blur-sm"></div>
+                        <Image
+                          src={item.url}
+                          alt={item.name}
+                          fill
+                          style={{ 
+                            objectFit: 'cover',
+                            objectPosition: item.position || 'center'
+                          }}
+                          sizes="(max-width: 768px) 100vw, 25vw"
+                          className="hover:scale-110 transition-transform duration-300"
+                          quality={100}
+                          priority
+                        />
+                      </div>
+                    </Link>
+                    <h3 className="text-xl font-semibold mt-4 mb-2">{item.name}</h3>
+                    <p className="text-gray-600">Find the perfect {item.name.toLowerCase()} for your style</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex justify-center mt-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-[75%] mx-auto">
+                {[
+                  { name: 'Ski Poles', url: '/poles.jpg', id: 'poles' },
+                  { name: 'Bindings', url: '/bindings.jpg', id: 'bindings' },
+                  { name: 'Apparel', url: '/apparrel.jpg', id: 'apparel', position: 'center 40%' }
+                ].map((item) => (
+                  <div key={item.name} className="text-center">
+                    <Link 
+                      href={`/gear#${item.id}`}
+                      className="group block w-56 h-56 mx-auto bg-white/50 backdrop-blur-sm rounded-full overflow-hidden transition-all duration-300 ease-out hover:-translate-y-1 transform-gpu shadow-md hover:shadow-2xl"
+                    >
+                      <div className="relative h-full w-full bg-gradient-to-b from-gray-100 to-gray-200">
+                        <div className="absolute inset-0 backdrop-blur-sm"></div>
+                        <Image
+                          src={item.url}
+                          alt={item.name}
+                          fill
+                          style={{ 
+                            objectFit: 'cover',
+                            objectPosition: item.position || 'center'
+                          }}
+                          sizes="(max-width: 768px) 100vw, 25vw"
+                          className="hover:scale-110 transition-transform duration-300"
+                          quality={100}
+                          priority
+                        />
+                      </div>
+                    </Link>
+                    <h3 className="text-xl font-semibold mt-4 mb-2">{item.name}</h3>
+                    <p className="text-gray-600">Find the perfect {item.name.toLowerCase()} for your style</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Weather Widget */}
+        <section className="py-12 backdrop-blur-sm">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center mb-12">
+              <div className="relative py-4 inline-block">
+                <div className="absolute -inset-4 bg-gradient-radial from-white/50 via-white/30 to-transparent blur-lg"></div>
+                <div className="relative">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                  <h2 className="font-playfair text-4xl font-bold text-gray-900 relative">
+                    <span className="relative inline-block">
+                      Current Conditions
+                      <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
+                    </span>
+                  </h2>
+                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {Object.entries(weatherData)
+                .filter(([resort]) => ['Brighton', 'Alta', 'Snowbird'].includes(resort))
+                .map(([resort, weather]) => (
+                  <WeatherWidget
+                    key={resort}
+                    resortName={resort}
+                    weather={weather}
                   />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-2">{resort.name}</h3>
-                  <p className="text-gray-600 mb-4">{resort.description}</p>
-                  <Link 
-                    href={`/resorts/${resort.name.toLowerCase().replace(' ', '-')}`}
-                    className="text-blue-600 font-semibold hover:text-blue-800"
-                  >
-                    Learn More →
-                  </Link>
-                </div>
-              </div>
-            ))}
+                ))}
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* Equipment Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Essential Gear</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {['Skis', 'Boots', 'Helmet', 'Goggles'].map((item) => (
-              <div key={item} className="text-center">
-                <div className="relative h-48 mb-4">
-                  <Image
-                    src={`/${item.toLowerCase()}.jpg`}
-                    alt={item}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{item}</h3>
-                <p className="text-gray-600">Find the perfect {item.toLowerCase()} for your style</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Tips Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Utah Skiing Tips</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                title: 'Altitude Acclimation',
-                description: 'Utah resorts are at high elevation. Take time to adjust and stay hydrated.'
-              },
-              {
-                title: 'Powder Day Strategy',
-                description: 'Utah is famous for its powder. Learn how to find the best powder stashes.'
-              }
-            ].map((tip) => (
-              <div key={tip.title} className="bg-white p-6 rounded-lg shadow-md">
-                <h3 className="text-2xl font-bold mb-4">{tip.title}</h3>
-                <p className="text-gray-600">{tip.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Weather Widget */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Current Conditions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {Object.entries(weatherData).map(([resort, weather]) => (
-              <WeatherWidget
-                key={resort}
-                resortName={resort}
-                weather={weather}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
   );
-} 
+}
