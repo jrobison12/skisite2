@@ -1,4 +1,4 @@
-'use client';
+res'use client';
 
 interface UdotCautionBannerProps {
   isPowderAlertActive: boolean;
