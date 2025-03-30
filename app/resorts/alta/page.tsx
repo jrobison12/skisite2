@@ -6,38 +6,7 @@ import DifficultyIcon from '../../components/DifficultyIcon';
 
 export default function AltaResort() {
   const { weatherData, isLoading, error } = useWeatherData();
-  
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-        <div className="container mx-auto px-4 py-8">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
-            <div className="h-4 bg-gray-200 rounded w-3/4 mb-8"></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="h-64 bg-gray-200 rounded"></div>
-              <div className="h-64 bg-gray-200 rounded"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-red-500">Error loading weather data: {error.message}</div>
-        </div>
-      </div>
-    );
-  }
-
-  const altaWeather = weatherData?.Alta;
-  if (!altaWeather) {
-    return null;
-  }
+  const altaWeather = weatherData && 'Alta' in weatherData ? weatherData.Alta : null;
 
   return (
     <main className="min-h-screen bg-white relative">
@@ -55,7 +24,7 @@ export default function AltaResort() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10">
+      <div className="relative z-10 -mt-14 md:mt-0">
         {/* Hero Section */}
         <div className="relative h-[80vh]">
           <Image
@@ -104,31 +73,37 @@ export default function AltaResort() {
 
             <h2 className="text-3xl font-bold mb-8 text-center">Current Conditions</h2>
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="grid md:grid-cols-3 gap-8">
-                <div>
-                  <h3 className="font-bold text-xl mb-4">Temperature</h3>
-                  <p className="text-4xl font-bold text-blue-600">
-                    {Math.round(altaWeather.current.temperature_2m * 9/5 + 32)}°F
-                  </p>
-                  <p className="text-gray-600">
-                    Feels like {Math.round(altaWeather.current.apparent_temperature * 9/5 + 32)}°F
-                  </p>
+              {isLoading || !altaWeather ? (
+                <div className="flex justify-center items-center min-h-[200px]">
+                  <div className="animate-pulse text-gray-600">Loading weather data...</div>
                 </div>
-                <div>
-                  <h3 className="font-bold text-xl mb-4">Snow Conditions</h3>
-                  <p className="text-4xl font-bold text-blue-600">
-                    {Math.round(altaWeather.hourly.snowfall[0] / 25.4 * 10) / 10}″
-                  </p>
-                  <p className="text-gray-600">Fresh Snow (Last Hour)</p>
+              ) : (
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div>
+                    <h3 className="font-bold text-xl mb-4">Temperature</h3>
+                    <p className="text-4xl font-bold text-blue-600">
+                      {Math.round(altaWeather.current.temperature_2m * 9/5 + 32)}°F
+                    </p>
+                    <p className="text-gray-600">
+                      Feels like {Math.round(altaWeather.current.apparent_temperature * 9/5 + 32)}°F
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-xl mb-4">Snow Conditions</h3>
+                    <p className="text-4xl font-bold text-blue-600">
+                      {Math.round(altaWeather.hourly.snowfall[0] / 25.4 * 10) / 10}″
+                    </p>
+                    <p className="text-gray-600">Fresh Snow (Last Hour)</p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-xl mb-4">Wind</h3>
+                    <p className="text-4xl font-bold text-blue-600">
+                      {Math.round(altaWeather.current.wind_speed_10m)} mph
+                    </p>
+                    <p className="text-gray-600">Current Wind Speed</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-bold text-xl mb-4">Wind</h3>
-                  <p className="text-4xl font-bold text-blue-600">
-                    {Math.round(altaWeather.current.wind_speed_10m)} mph
-                  </p>
-                  <p className="text-gray-600">Current Wind Speed</p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </section>
@@ -182,37 +157,73 @@ export default function AltaResort() {
                 </div>
               </div>
               <div>
-                <h2 className="text-3xl font-bold mb-6">Featured Amenities</h2>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">World-Class Powder</h3>
-                      <p className="text-gray-700">Experience Utah's legendary powder snow in Little Cottonwood Canyon.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">Ski School</h3>
-                      <p className="text-gray-700">Professional instruction for all levels, from first-timers to experts.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">On-Mountain Dining</h3>
-                      <p className="text-gray-700">Multiple lodges offering diverse dining options.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">Equipment Rentals</h3>
-                      <p className="text-gray-700">High-quality ski equipment and professional fitting services.</p>
-                    </div>
-                  </li>
-                </ul>
+                <div className="relative">
+                  <h2 className="text-3xl font-bold mb-6">Featured Amenities</h2>
+                  <ul className="space-y-4">
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">World-Class Powder</h3>
+                        <p className="text-gray-700">Experience Utah's legendary powder snow in Little Cottonwood Canyon.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">Ski School</h3>
+                        <p className="text-gray-700">Professional instruction for all levels, from first-timers to experts.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">On-Mountain Dining</h3>
+                        <p className="text-gray-700">Multiple lodges offering diverse dining options.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">Equipment Rentals</h3>
+                        <p className="text-gray-700">High-quality ski equipment and professional fitting services.</p>
+                      </div>
+                    </li>
+                  </ul>
+
+                  {/* Parking Section - Mobile */}
+                  <div className="block md:hidden mt-8 mb-12">
+                    <h3 className="font-bold text-lg mb-2">Parking</h3>
+                    <a
+                      href="https://www.alta.com/parking"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                    >
+                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
+                      </svg>
+                      Parking Info
+                    </a>
+                  </div>
+
+                  {/* Parking Section - Desktop */}
+                  <div className="hidden md:block absolute" style={{ top: '0', right: '-400px' }}>
+                    <h3 className="font-bold text-lg mb-2">Parking</h3>
+                    <a
+                      href="https://www.alta.com/parking"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                    >
+                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
+                      </svg>
+                      Parking Info
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

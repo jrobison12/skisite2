@@ -23,7 +23,7 @@ export default async function ParkCityResort() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10">
+      <div className="relative z-10 -mt-14 md:mt-0">
         {/* Hero Section */}
         <div className="relative h-[80vh]">
           <Image
@@ -130,37 +130,54 @@ export default async function ParkCityResort() {
                 </div>
               </div>
               <div>
-                <h2 className="text-3xl font-bold mb-6">Featured Amenities</h2>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">Historic Main Street</h3>
-                      <p className="text-gray-700">Charming downtown with restaurants, shops, and après-ski activities.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">Canyons Village</h3>
-                      <p className="text-gray-700">Modern base area with luxury lodging and dining options.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">High Alpine Terrain</h3>
-                      <p className="text-gray-700">Extensive above-treeline skiing with stunning views.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">Terrain Parks</h3>
-                      <p className="text-gray-700">Multiple parks including the famous King's Crown Superpipe.</p>
-                    </div>
-                  </li>
-                </ul>
+                <div className="relative">
+                  <h2 className="text-3xl font-bold mb-6">Featured Amenities</h2>
+                  <ul className="space-y-4">
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">Historic Main Street</h3>
+                        <p className="text-gray-700">Charming downtown with restaurants, shops, and après-ski activities.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">Canyons Village</h3>
+                        <p className="text-gray-700">Modern base area with luxury lodging and dining options.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">High Alpine Terrain</h3>
+                        <p className="text-gray-700">Extensive above-treeline skiing with stunning views.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">Terrain Parks</h3>
+                        <p className="text-gray-700">Multiple parks including the famous King's Crown Superpipe.</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <div className="relative mt-8">
+                    <h3 className="font-bold text-lg mb-2">Parking</h3>
+                    <a
+                      href="https://reserve.parkatparkcitymountain.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                    >
+                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
+                      </svg>
+                      Reserve Parking
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -23,7 +23,7 @@ export default async function SnowbasinResort() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10">
+      <div className="relative z-10 -mt-14 md:mt-0">
         {/* Hero Section */}
         <div className="relative h-[80vh]">
           <Image
@@ -130,37 +130,69 @@ export default async function SnowbasinResort() {
                 </div>
               </div>
               <div>
-                <h2 className="text-3xl font-bold mb-6">Featured Amenities</h2>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">Olympic Legacy</h3>
-                      <p className="text-gray-700">Home to the 2002 Olympic Winter Games downhill and super-G events.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">Luxury Lodges</h3>
-                      <p className="text-gray-700">Historic lodges with fine dining and stunning architecture.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">Grooming</h3>
-                      <p className="text-gray-700">World-class grooming on all runs for optimal conditions.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <div>
-                      <h3 className="font-bold">Terrain Parks</h3>
-                      <p className="text-gray-700">Multiple progression parks for all skill levels.</p>
-                    </div>
-                  </li>
-                </ul>
+                <div className="relative">
+                  <h2 className="text-3xl font-bold mb-6">Featured Amenities</h2>
+                  <ul className="space-y-4 mb-8 md:mb-0">
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">Olympic Legacy</h3>
+                        <p className="text-gray-700">Home to the 2002 Winter Olympics downhill courses.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">Gondola Access</h3>
+                        <p className="text-gray-700">Modern gondola system for quick mountain access.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">Dining Excellence</h3>
+                        <p className="text-gray-700">Gourmet mountain dining with stunning views.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-blue-600 mr-2">•</span>
+                      <div>
+                        <h3 className="font-bold">Equipment Rentals</h3>
+                        <p className="text-gray-700">Full-service rental shop with high-quality gear.</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <div className="block md:hidden mt-8 mb-12">
+                    <h3 className="font-bold text-lg mb-2">Parking</h3>
+                    <a
+                      href="https://www.snowbasin.com/about/getting-here/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                    >
+                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
+                      </svg>
+                      Parking Info
+                    </a>
+                  </div>
+                  <div className="hidden md:block md:absolute" style={{ top: '435px' }}>
+                    <h3 className="font-bold text-lg mb-2">Parking</h3>
+                    <a
+                      href="https://www.snowbasin.com/about/getting-here/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                    >
+                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
+                      </svg>
+                      Parking Info
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

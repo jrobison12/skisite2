@@ -17,81 +17,75 @@ export default async function Home() {
           src="/background.jpeg"
           alt="Utah ski terrain background"
           fill
-          className="object-cover opacity-30"
+          className="object-cover object-[center_10%] sm:object-center opacity-30"
           priority
           quality={100}
+          sizes="100vw"
         />
       </div>
       
       {/* Content with relative positioning */}
       <div className="relative z-10">
         {/* Hero Section */}
-        <section className="relative h-[70vh] flex items-center justify-center text-center px-4">
-          <div className="max-w-4xl space-y-6 animate-fade-in relative p-16">
+        <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-4 pt-14">
+          <div className="max-w-4xl space-y-4 sm:space-y-6 animate-fade-in relative p-4 sm:p-8">
             {/* Subtle gradient background for hero */}
-            <div className="absolute inset-0 -inset-x-8 bg-gradient-radial from-white/60 via-white/40 to-transparent blur-lg"></div>
+            <div className="absolute inset-0 -inset-x-8 bg-gradient-radial from-white/90 via-white/70 to-transparent blur-lg"></div>
             
-            <h1 className="font-playfair text-6xl md:text-7xl font-bold mb-6 text-gray-900 tracking-tight relative">
+            <h1 className="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 text-gray-900 tracking-tight relative">
               <span className="block animate-slide-up opacity-0 [animation-delay:200ms] relative">
                 <span className="snow-text text-blue-600">
                   Best Snow on Earth
-                  <div className="icicle"></div>
-                  <div className="icicle"></div>
-                  <div className="icicle"></div>
-                  <div className="icicle"></div>
-                  <div className="icicle"></div>
-                  <div className="icicle"></div>
-                  <div className="icicle"></div>
                 </span>
-                <span className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></span>
+                <span className="absolute -bottom-2 sm:-bottom-4 left-1/2 transform -translate-x-1/2 w-16 sm:w-24 h-0.5 sm:h-1 bg-blue-600 rounded-full"></span>
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 text-center max-w-3xl mx-auto mb-16 animate-slide-up opacity-0 [animation-delay:400ms]">
+            <p className="text-sm sm:text-base md:text-lg text-gray-800 text-center max-w-3xl mx-auto mb-6 sm:mb-12 animate-slide-up opacity-0 [animation-delay:400ms] px-4 relative">
               Your comprehensive guide to Utah's legendary ski resorts, from the deep powder of Little Cottonwood Canyon to the diverse terrain of Park City.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in opacity-0 [animation-delay:1000ms]">
+            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 animate-fade-in opacity-0 [animation-delay:1000ms] px-4 w-full max-w-md mx-auto">
               <Link 
                 href="/weather" 
-                className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl font-montserrat tracking-wide"
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl font-montserrat tracking-wide w-full sm:w-auto"
               >
                 Check Conditions
               </Link>
               <Link 
                 href="/resorts" 
-                className="bg-white/50 backdrop-blur-sm text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/60 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl font-montserrat tracking-wide"
+                className="bg-white/50 backdrop-blur-sm text-gray-900 px-6 py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-white/60 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl font-montserrat tracking-wide w-full sm:w-auto"
               >
                 Explore Resorts
               </Link>
               <Link 
                 href="/parking" 
-                className="bg-white/50 backdrop-blur-sm text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white/60 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl font-montserrat tracking-wide"
+                className="bg-white/50 backdrop-blur-sm text-gray-900 px-6 py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-white/60 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl font-montserrat tracking-wide w-full sm:w-auto"
               >
                 Reserve Parking
               </Link>
             </div>
           </div>
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-            <IoSnowSharp className="text-blue-600 w-16 h-16 opacity-80 animate-snowflake" />
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-none">
+            <IoSnowSharp className="text-blue-600 w-8 h-8 sm:w-12 sm:h-12 opacity-80 animate-snowflake" />
           </div>
         </section>
 
         <FadingDivider />
 
         {/* Featured Resorts */}
-        <section className="pb-8 backdrop-blur-sm">
+        <section className="py-6 sm:py-8 backdrop-blur-sm">
           <div className="container mx-auto px-4">
-            <div className="flex justify-center mb-12">
-              <div className="relative py-4 inline-block">
+            <div className="flex justify-center mb-8 sm:mb-12">
+              <div className="relative py-2 sm:py-4 inline-block">
                 <div className="absolute -inset-4 bg-gradient-radial from-white/50 via-white/30 to-transparent blur-lg"></div>
                 <div className="relative">
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
-                  <h2 className="font-playfair text-4xl font-bold text-gray-900 relative">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-12 h-12 sm:w-16 sm:h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                  <h2 className="font-playfair text-3xl sm:text-4xl font-bold text-gray-900 relative">
                     <span className="relative inline-block">
                       Featured Resorts
                       <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
                     </span>
                   </h2>
-                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-12 h-12 sm:w-16 sm:h-16 bg-blue-600/10 rounded-full blur-xl"></div>
                 </div>
               </div>
             </div>
@@ -146,20 +140,20 @@ export default async function Home() {
         </section>
 
         {/* Equipment Section */}
-        <section className="py-12 backdrop-blur-sm">
+        <section className="py-6 sm:py-12 backdrop-blur-sm">
           <div className="container mx-auto px-4">
-            <div className="flex justify-center mb-12">
-              <div className="relative py-4 inline-block">
+            <div className="flex justify-center mb-8 sm:mb-12">
+              <div className="relative py-2 sm:py-4 inline-block">
                 <div className="absolute -inset-4 bg-gradient-radial from-white/50 via-white/30 to-transparent blur-lg"></div>
                 <div className="relative">
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
-                  <h2 className="font-playfair text-4xl font-bold text-gray-900 relative">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-12 h-12 sm:w-16 sm:h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                  <h2 className="font-playfair text-3xl sm:text-4xl font-bold text-gray-900 relative">
                     <span className="relative inline-block">
                       Essential Gear
                       <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
                     </span>
                   </h2>
-                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-12 h-12 sm:w-16 sm:h-16 bg-blue-600/10 rounded-full blur-xl"></div>
                 </div>
               </div>
             </div>
@@ -238,20 +232,20 @@ export default async function Home() {
         </section>
 
         {/* Weather Widget */}
-        <section className="py-12 backdrop-blur-sm">
+        <section className="py-6 sm:py-12 backdrop-blur-sm">
           <div className="container mx-auto px-4">
-            <div className="flex justify-center mb-12">
-              <div className="relative py-4 inline-block">
+            <div className="flex justify-center mb-8 sm:mb-12">
+              <div className="relative py-2 sm:py-4 inline-block">
                 <div className="absolute -inset-4 bg-gradient-radial from-white/50 via-white/30 to-transparent blur-lg"></div>
                 <div className="relative">
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
-                  <h2 className="font-playfair text-4xl font-bold text-gray-900 relative">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-12 h-12 sm:w-16 sm:h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                  <h2 className="font-playfair text-3xl sm:text-4xl font-bold text-gray-900 relative">
                     <span className="relative inline-block">
                       Current Conditions
                       <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-600 to-transparent"></div>
                     </span>
                   </h2>
-                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-blue-600/10 rounded-full blur-xl"></div>
+                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-12 h-12 sm:w-16 sm:h-16 bg-blue-600/10 rounded-full blur-xl"></div>
                 </div>
               </div>
             </div>

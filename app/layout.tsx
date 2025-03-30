@@ -11,6 +11,7 @@ import PowderAlert from './components/PowderAlert';
 import UdotCautionBanner from './components/UdotCautionBanner';
 import { getAllResortsWeather } from './services/weather';
 import { WeatherData } from './types/weather';
+import Navbar from './components/Navbar';
 
 const inter = Inter({ subsets: ['latin'] });
 const montserrat = Montserrat({ 
@@ -50,51 +51,7 @@ export default async function RootLayout({
         <div className="fixed w-full z-50">
           <PowderAlert weatherData={weatherData} />
           <UdotCautionBanner isPowderAlertActive={isPowderAlertActive} />
-          <nav className="fixed w-full z-50 bg-gradient-to-r from-blue-800 to-blue-900 shadow-lg">
-            <div className="container mx-auto px-4">
-              <div className="flex items-center justify-between h-16">
-                <Link href="/" className="text-2xl font-bold text-white hover:text-blue-100 transition-colors flex items-center gap-2">
-                  SLCPowder
-                  <IoSnowSharp className="text-2xl" />
-                </Link>
-                <div className="hidden md:flex space-x-6">
-                  <ResortsDropdown />
-                  <Link 
-                    href="/gear" 
-                    className="text-white hover:text-blue-200 px-4 py-2 text-lg font-medium border-b-2 border-transparent hover:border-blue-200 transition-all duration-200"
-                  >
-                    Gear
-                  </Link>
-                  <Link 
-                    href="/tips" 
-                    className="text-white hover:text-blue-200 px-4 py-2 text-lg font-medium border-b-2 border-transparent hover:border-blue-200 transition-all duration-200"
-                  >
-                    Tips
-                  </Link>
-                  <Link 
-                    href="/weather" 
-                    className="text-white hover:text-blue-200 px-4 py-2 text-lg font-medium border-b-2 border-transparent hover:border-blue-200 transition-all duration-200"
-                  >
-                    Weather
-                  </Link>
-                  <Link 
-                    href="/parking" 
-                    className="text-white hover:text-blue-200 px-4 py-2 text-lg font-medium border-b-2 border-transparent hover:border-blue-200 transition-all duration-200"
-                  >
-                    Parking
-                  </Link>
-                  <a 
-                    href="https://cottonwoodcanyons.udot.utah.gov/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white hover:text-blue-200 px-4 py-2 text-lg font-medium border-b-2 border-transparent hover:border-blue-200 transition-all duration-200"
-                  >
-                    UDOT
-                  </a>
-                </div>
-              </div>
-            </div>
-          </nav>
+          <Navbar />
         </div>
         <main className="min-h-screen bg-gradient-to-b from-gray-100 to-blue-100 pt-16">
           {children}
