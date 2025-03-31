@@ -15,9 +15,18 @@ interface WeatherCardProps {
 
 // Helper function to get weather icon based on weather code
 function getWeatherIcon(code: number): string {
+  // Check if it's nighttime (between 6 PM and 6 AM Mountain Time)
+  const hour = new Date().toLocaleString('en-US', { 
+    timeZone: 'America/Denver',
+    hour: 'numeric',
+    hour12: false 
+  });
+  const isNight = parseInt(hour) < 6 || parseInt(hour) >= 18;
+
+  // Map WMO codes to our icon set
   const weatherCodes: Record<number, string> = {
     0: 'clear-day', // Clear sky
-    1: 'partly-cloudy-day', // Mainly clear
+    1: 'clear-day', // Mainly clear
     2: 'partly-cloudy-day', // Partly cloudy
     3: 'cloudy', // Overcast
     45: 'fog', // Foggy
@@ -36,7 +45,20 @@ function getWeatherIcon(code: number): string {
     86: 'snow', // Heavy snow showers
     95: 'thunderstorm', // Thunderstorm
   };
-  return weatherCodes[code] || 'cloudy';
+
+  // Get the base icon name
+  let iconName = weatherCodes[code] || 'cloudy';
+  
+  // Convert to night version if it's nighttime and we have a day/night variant
+  if (isNight) {
+    if (iconName === 'clear-day') {
+      iconName = 'clear-day';  // We don't have a night version, keep using day
+    } else if (iconName === 'partly-cloudy-day') {
+      iconName = 'partly-cloudy-day';  // We don't have a night version, keep using day
+    }
+  }
+
+  return iconName;
 }
 
 function getResortLogo(resort: string): string {
@@ -90,8 +112,73 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
   const tempF = Math.round(weather.current.temperature_2m * 9/5 + 32);
   const feelsLikeF = Math.round(weather.current.apparent_temperature * 9/5 + 32);
   
-  // Wind speed is already in mph from the API
-  const windSpeedMph = Math.round(weather.current.wind_speed_10m);
+  // Debug logging for weather conditions
+  console.log(`${resort} weather conditions:`, {
+    time: new Date().toLocaleTimeString('en-US', { timeZone: 'America/Denver' }),
+    weatherCode: weather.current.weather_code,
+    wind_speed: {
+      raw: weather.current.wind_speed_10m,
+      type: typeof weather.current.wind_speed_10m,
+      value_before_rounding: weather.current.wind_speed_10m,
+      value_after_rounding: Math.round(weather.current.wind_speed_10m)
+    },
+    description: (() => {
+      const descriptions: Record<number, string> = {
+        0: 'Clear sky',
+        1: 'Mainly clear',
+        2: 'Partly cloudy',
+        3: 'Overcast',
+        45: 'Foggy',
+        48: 'Depositing rime fog',
+        51: 'Light drizzle',
+        53: 'Moderate drizzle',
+        55: 'Dense drizzle',
+        61: 'Slight rain',
+        63: 'Moderate rain',
+        65: 'Heavy rain',
+        71: 'Slight snow',
+        73: 'Moderate snow',
+        75: 'Heavy snow',
+        77: 'Snow grains',
+        85: 'Slight snow showers',
+        86: 'Heavy snow showers',
+        95: 'Thunderstorm'
+      };
+      return descriptions[weather.current.weather_code] || 'Unknown';
+    })(),
+    iconUsed: getWeatherIcon(weather.current.weather_code)
+  });
+  
+  // Handle wind speed data
+  const rawSpeed = weather.current.wind_speed_10m;
+  
+  // For Solitude, log the raw wind speed data
+  if (resort === 'Solitude') {
+    console.log('WeatherCard Solitude wind speed:', {
+      raw: rawSpeed,
+      type: typeof rawSpeed,
+      isNaN: isNaN(rawSpeed),
+      timestamp: new Date().toISOString(),
+      fullWeatherData: weather.current
+    });
+  }
+
+  // Validate and process wind speed
+  let windSpeed = 0;
+  if (typeof rawSpeed === 'number' && !isNaN(rawSpeed)) {
+    windSpeed = Math.round(rawSpeed);
+  } else {
+    console.error(`Invalid wind speed for ${resort}:`, rawSpeed);
+  }
+
+  // For Solitude, log the processed wind speed
+  if (resort === 'Solitude') {
+    console.log('WeatherCard Solitude processed wind speed:', {
+      raw: rawSpeed,
+      processed: windSpeed,
+      timestamp: new Date().toISOString()
+    });
+  }
 
   return (
     <div className="bg-white/50 backdrop-blur-sm rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300 ring-2 ring-blue-500 relative overflow-hidden">
@@ -168,7 +255,7 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
                   alt="Weather icon"
                   width={40}
                   height={40}
-                  className="brightness-0 opacity-70"
+                  className="opacity-80"
                 />
               </div>
               <p className="text-sm text-gray-500">
@@ -178,7 +265,7 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
             <div>
               <p className="text-sm text-gray-500">Wind Speed</p>
               <p className="text-2xl sm:text-3xl font-bold text-blue-600">
-                {windSpeedMph} mph
+                {windSpeed} mph
               </p>
             </div>
           </div>

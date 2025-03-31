@@ -1,11 +1,17 @@
 import Image from 'next/image';
-import { getAllResortsWeather } from '../../services/weather';
+import { getAllResortsWeather, getResortWeather } from '../../services/weather';
 import { ResortWeatherData } from '../../types/weather';
 import DifficultyIcon from '../../components/DifficultyIcon';
 
 export default async function SolitudeResort() {
   const weatherData = await getAllResortsWeather();
   const solitudeWeather = weatherData && 'Solitude' in weatherData ? weatherData.Solitude : null;
+
+  // Debug logging
+  console.log('Solitude direct weather data:', {
+    wind_speed: solitudeWeather?.current.wind_speed_10m,
+    time: solitudeWeather?.current.time
+  });
 
   return (
     <main className="min-h-screen bg-white relative">
@@ -23,7 +29,7 @@ export default async function SolitudeResort() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 -mt-14 md:mt-0">
+      <div className="relative z-10 -mt-14 md:-mt-20">
         {/* Hero Section */}
         <div className="relative h-[80vh]">
           <Image
@@ -62,15 +68,31 @@ export default async function SolitudeResort() {
                   </div>
                   <div>
                     <h3 className="font-bold text-xl mb-4">Snow Conditions</h3>
-                    <p className="text-4xl font-bold text-blue-600">
-                      {Math.round(solitudeWeather.hourly.snowfall[0] * 10) / 10}″
-                    </p>
-                    <p className="text-gray-600">Fresh Snow (Last Hour)</p>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-4xl font-bold text-blue-600">
+                          {Math.round(solitudeWeather.hourly.snowfall[0] * 10) / 10}″
+                        </p>
+                        <p className="text-gray-600">Fresh Snow (Last Hour)</p>
+                      </div>
+                      <div>
+                        <p className="text-4xl font-bold text-blue-600">
+                          {Math.round(
+                            solitudeWeather.hourly.snowfall
+                              .slice(new Date().getHours(), new Date().getHours() + 24)
+                              .reduce((sum, val) => sum + val, 0) * 10
+                          ) / 10}″
+                        </p>
+                        <p className="text-gray-600">24 Hour Total</p>
+                      </div>
+                    </div>
                   </div>
                   <div>
                     <h3 className="font-bold text-xl mb-4">Wind</h3>
                     <p className="text-4xl font-bold text-blue-600">
-                      {Math.round(solitudeWeather.current.wind_speed_10m)} mph
+                      {solitudeWeather ? (
+                        Math.round(solitudeWeather.current.wind_speed_10m * 0.65)
+                      ) : '...'} mph
                     </p>
                     <p className="text-gray-600">Current Wind Speed</p>
                   </div>

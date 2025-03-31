@@ -24,7 +24,7 @@ export default function AltaResort() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 -mt-14 md:mt-0">
+      <div className="relative z-10 -mt-14 md:-mt-20">
         {/* Hero Section */}
         <div className="relative h-[80vh]">
           <Image

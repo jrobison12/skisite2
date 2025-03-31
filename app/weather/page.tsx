@@ -94,7 +94,7 @@ export default function WeatherPage() {
   });
 
   return (
-    <main className="min-h-screen bg-white pt-20 relative">
+    <main className="min-h-screen bg-white pt-12 relative">
       <div className="fixed inset-0 z-0">
         <Image
           src="/solitude.jpg"

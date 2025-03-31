@@ -63,7 +63,7 @@ interface WeatherCache {
 }
 
 // Cache duration in milliseconds (30 minutes)
-const CACHE_DURATION = 30 * 60 * 1000;
+const CACHE_DURATION = 1000; // Temporarily set to 1 second to force refresh
 
 // In-memory cache
 let weatherCache: WeatherCache | null = null;
@@ -126,6 +126,9 @@ export async function getResortWeather(resortName: string): Promise<WeatherData>
     const start_date = startDate.toISOString().split('T')[0];
     const end_date = endDate.toISOString().split('T')[0];
 
+    // For Solitude, use Brighton's coordinates for wind speed
+    const windSpeedCoords = resortName === 'Solitude' ? RESORT_COORDINATES['Brighton'] : coords;
+
     // Optimized API request with fewer parameters and data points
     const url = `${BASE_URL}/forecast?` +
       `latitude=${coords.lat}&longitude=${coords.lon}&` +
@@ -136,25 +139,72 @@ export async function getResortWeather(resortName: string): Promise<WeatherData>
       `start_date=${start_date}&` +
       `end_date=${end_date}&` +
       `precipitation_unit=inch&` +
-      `snowfall_unit=inch`;
+      `snowfall_unit=inch&` +
+      `wind_speed_unit=mph`;
 
+    // For Solitude, make an additional request for wind speed using Brighton's coordinates
+    let windSpeedData = null;
+    if (resortName === 'Solitude') {
+      const windSpeedUrl = `${BASE_URL}/forecast?` +
+        `latitude=${windSpeedCoords.lat}&longitude=${windSpeedCoords.lon}&` +
+        `current=wind_speed_10m&` +
+        `timezone=America/Denver&` +
+        `wind_speed_unit=mph`;
+
+      console.log('Fetching Solitude wind speed using Brighton coordinates:', windSpeedUrl);
+      const windSpeedResponse = await fetchWithRetry(windSpeedUrl);
+      windSpeedData = await windSpeedResponse.json();
+    }
+    
     const response = await fetchWithRetry(url);
     const data = await response.json();
 
-    console.log(`Raw weather data for ${resortName}:`, {
-      current: data.current,
-      hourly: {
-        snowfall: data.hourly.snowfall.slice(0, 24),
-        time: data.hourly.time.slice(0, 24)
-      },
-      daily: {
-        snowfall_sum: data.daily.snowfall_sum,
-        time: data.daily.time
-      }
-    });
+    // For Solitude, log the complete raw response
+    if (resortName === 'Solitude') {
+      console.log('Solitude complete API response:', {
+        current: data.current,
+        windSpeedData: windSpeedData?.current,
+        url: url,
+        timestamp: new Date().toISOString(),
+        coordinates: coords,
+        windSpeedCoordinates: windSpeedCoords,
+        rawResponse: data,
+        location: {
+          lat: coords.lat,
+          lon: coords.lon,
+          elevation: coords.elevation,
+          description: 'Solitude Mountain Resort Base Area'
+        }
+      });
+    }
+
+    // Validate wind speed data
+    if (typeof data.current?.wind_speed_10m !== 'number' || isNaN(data.current?.wind_speed_10m)) {
+      console.error(`Invalid wind speed data for ${resortName}:`, data.current);
+      throw new Error(`Invalid wind speed data received for ${resortName}`);
+    }
+
+    // For Solitude, use Brighton's wind speed data
+    if (resortName === 'Solitude' && windSpeedData?.current?.wind_speed_10m) {
+      data.current.wind_speed_10m = windSpeedData.current.wind_speed_10m;
+    }
+
+    // For Solitude, add extra validation
+    if (resortName === 'Solitude') {
+      console.log('Solitude wind speed validation:', {
+        rawWindSpeed: data.current.wind_speed_10m,
+        time: data.current.time,
+        temperature: data.current.temperature_2m,
+        weatherCode: data.current.weather_code,
+        coordinates: coords,
+        windSpeedCoordinates: windSpeedCoords,
+        elevation: coords.elevation,
+        location: 'Solitude Mountain Resort Base Area'
+      });
+    }
 
     // Process and return only the data we need
-    return {
+    const processedData = {
       current: {
         temperature_2m: data.current.temperature_2m,
         apparent_temperature: data.current.apparent_temperature,
@@ -165,10 +215,10 @@ export async function getResortWeather(resortName: string): Promise<WeatherData>
         weather_code: data.current.weather_code
       },
       hourly: {
-        temperature: data.hourly.temperature_2m, // Get all hours
-        snowfall: data.hourly.snowfall, // Get all hours
-        time: data.hourly.time, // Get all hours
-        precipitation: data.hourly.precipitation // Get all hours
+        temperature: data.hourly.temperature_2m,
+        snowfall: data.hourly.snowfall,
+        time: data.hourly.time,
+        precipitation: data.hourly.precipitation
       },
       daily: {
         date: data.daily.time,
@@ -177,6 +227,17 @@ export async function getResortWeather(resortName: string): Promise<WeatherData>
         temperature_2m_min: data.daily.temperature_2m_min
       }
     };
+
+    // For Solitude, log the processed data
+    if (resortName === 'Solitude') {
+      console.log('Solitude processed weather data:', {
+        wind_speed: processedData.current.wind_speed_10m,
+        time: processedData.current.time,
+        fullProcessedData: processedData
+      });
+    }
+
+    return processedData;
   } catch (error) {
     console.error(`Error fetching weather for ${resortName}:`, error);
     throw error;

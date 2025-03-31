@@ -23,7 +23,7 @@ export default async function SnowbirdResort() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 -mt-14 md:mt-0">
+      <div className="relative z-10 -mt-14 md:-mt-20">
         {/* Hero Section */}
         <div className="relative h-[80vh]">
           <Image
@@ -87,10 +87,24 @@ export default async function SnowbirdResort() {
                   </div>
                   <div>
                     <h3 className="font-bold text-xl mb-4">Snow Conditions</h3>
-                    <p className="text-4xl font-bold text-blue-600">
-                      {Math.round(snowbirdWeather.hourly.snowfall[0] / 25.4 * 10) / 10}″
-                    </p>
-                    <p className="text-gray-600">Fresh Snow (Last Hour)</p>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-4xl font-bold text-blue-600">
+                          {Math.round(snowbirdWeather.hourly.snowfall[0] * 10) / 10}″
+                        </p>
+                        <p className="text-gray-600">Fresh Snow (Last Hour)</p>
+                      </div>
+                      <div>
+                        <p className="text-4xl font-bold text-blue-600">
+                          {Math.round(
+                            snowbirdWeather.hourly.snowfall
+                              .slice(new Date().getHours(), new Date().getHours() + 24)
+                              .reduce((sum, val) => sum + val, 0) * 10
+                          ) / 10}″
+                        </p>
+                        <p className="text-gray-600">24 Hour Total</p>
+                      </div>
+                    </div>
                   </div>
                   <div>
                     <h3 className="font-bold text-xl mb-4">Wind</h3>
@@ -181,9 +195,9 @@ export default async function SnowbirdResort() {
         {/* Trail Map and Parking Container */}
         <section className="py-12 bg-white">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-24">
+            <div className="flex justify-center items-start gap-24">
               {/* Trail Map Section */}
-              <div className="text-center w-full sm:w-auto">
+              <div className="text-center">
                 <h3 className="font-bold text-lg mb-2">Trail Map</h3>
                 <a
                   href="https://www.snowbird.com/trail-maps/"

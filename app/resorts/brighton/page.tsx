@@ -23,7 +23,7 @@ export default async function BrightonResort() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 -mt-14 md:mt-0">
+      <div className="relative z-10 -mt-14 md:-mt-20">
         {/* Hero Section */}
         <div className="relative h-[80vh]">
           <Image
@@ -62,10 +62,24 @@ export default async function BrightonResort() {
                   </div>
                   <div className="text-center sm:text-left">
                     <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-4">Snow Conditions</h3>
-                    <p className="text-3xl sm:text-4xl font-bold text-blue-600">
-                      {Math.round(brightonWeather.hourly.snowfall[0] * 10) / 10}″
-                    </p>
-                    <p className="text-gray-600">Fresh Snow (Last Hour)</p>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-4xl font-bold text-blue-600">
+                          {Math.round(brightonWeather.hourly.snowfall[0] * 10) / 10}″
+                        </p>
+                        <p className="text-gray-600">Fresh Snow (Last Hour)</p>
+                      </div>
+                      <div>
+                        <p className="text-4xl font-bold text-blue-600">
+                          {Math.round(
+                            brightonWeather.hourly.snowfall
+                              .slice(new Date().getHours(), new Date().getHours() + 24)
+                              .reduce((sum, val) => sum + val, 0) * 10
+                          ) / 10}″
+                        </p>
+                        <p className="text-gray-600">24 Hour Total</p>
+                      </div>
+                    </div>
                   </div>
                   <div className="text-center sm:text-left">
                     <h3 className="font-bold text-xl mb-4">Wind</h3>
