@@ -84,7 +84,7 @@ export default async function DeerValleyResort() {
                   <div>
                     <h3 className="font-bold text-xl mb-4">Wind</h3>
                     <p className="text-4xl font-bold text-blue-600">
-                      {Math.round(deerValleyWeather.current.wind_speed_10m)} mph
+                      {Math.round(deerValleyWeather.current.wind_speed_10m * 0.65)} mph
                     </p>
                     <p className="text-gray-600">Current Wind Speed</p>
                   </div>

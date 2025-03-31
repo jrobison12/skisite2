@@ -8,7 +8,7 @@ export default async function SnowbirdResort() {
   const snowbirdWeather = weatherData && 'Snowbird' in weatherData ? weatherData.Snowbird : null;
 
   return (
-    <main className="min-h-screen bg-white relative">
+    <main className="min-h-screen bg-white relative -mt-[80px]">
       {/* Background Logo */}
       <div className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center">
         <div className="relative w-[800px] h-[400px] opacity-5">
@@ -23,7 +23,7 @@ export default async function SnowbirdResort() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 -mt-14 md:-mt-20">
+      <div className="relative z-10">
         {/* Hero Section */}
         <div className="relative h-[80vh]">
           <Image
@@ -123,7 +123,7 @@ export default async function SnowbirdResort() {
         <section className="py-16 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12">
-              <div>
+              <div className="text-center">
                 <h2 className="text-3xl font-bold mb-6">Resort Overview</h2>
                 <p className="text-gray-700 mb-4">
                   Snowbird is a year-round resort known for its diverse terrain, longest ski season in Utah, and 
@@ -154,32 +154,28 @@ export default async function SnowbirdResort() {
                 </div>
               </div>
               <div>
-                <div className="relative">
+                <div className="relative text-center">
                   <h2 className="text-3xl font-bold mb-6">Featured Amenities</h2>
                   <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">Aerial Tram</h3>
                         <p className="text-gray-700">Iconic 125-passenger tram accessing Hidden Peak at 11,000 feet.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">The Summit</h3>
                         <p className="text-gray-700">Year-round dining with panoramic views at 11,000 feet.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">Mountain School</h3>
                         <p className="text-gray-700">World-class instruction for all abilities.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">The Cliff Spa</h3>
                         <p className="text-gray-700">Rooftop pool and spa services with mountain views.</p>

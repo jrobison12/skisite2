@@ -166,7 +166,7 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
   // Validate and process wind speed
   let windSpeed = 0;
   if (typeof rawSpeed === 'number' && !isNaN(rawSpeed)) {
-    windSpeed = Math.round(rawSpeed);
+    windSpeed = Math.round(rawSpeed * 0.65);
   } else {
     console.error(`Invalid wind speed for ${resort}:`, rawSpeed);
   }

@@ -90,15 +90,29 @@ export default function AltaResort() {
                   </div>
                   <div>
                     <h3 className="font-bold text-xl mb-4">Snow Conditions</h3>
-                    <p className="text-4xl font-bold text-blue-600">
-                      {Math.round(altaWeather.hourly.snowfall[0] / 25.4 * 10) / 10}″
-                    </p>
-                    <p className="text-gray-600">Fresh Snow (Last Hour)</p>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-4xl font-bold text-blue-600">
+                          {Math.round(altaWeather.hourly.snowfall[0] / 25.4 * 10) / 10}″
+                        </p>
+                        <p className="text-gray-600">Fresh Snow (Last Hour)</p>
+                      </div>
+                      <div>
+                        <p className="text-4xl font-bold text-blue-600">
+                          {Math.round(
+                            altaWeather.hourly.snowfall
+                              .slice(new Date().getHours(), new Date().getHours() + 24)
+                              .reduce((sum, val) => sum + val, 0) / 25.4 * 10
+                          ) / 10}″
+                        </p>
+                        <p className="text-gray-600">24 Hour Total</p>
+                      </div>
+                    </div>
                   </div>
                   <div>
                     <h3 className="font-bold text-xl mb-4">Wind</h3>
                     <p className="text-4xl font-bold text-blue-600">
-                      {Math.round(altaWeather.current.wind_speed_10m)} mph
+                      {Math.round(altaWeather.current.wind_speed_10m * 0.65)} mph
                     </p>
                     <p className="text-gray-600">Current Wind Speed</p>
                   </div>

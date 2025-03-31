@@ -69,13 +69,13 @@ export default function WeatherWidget({ resortName, weather }: WeatherWidgetProp
   const feelsLikeF = Math.round(weather.current.apparent_temperature * 9/5 + 32);
   
   // Wind speed is already in mph from the API
-  const windSpeedMph = Math.round(weather.current.wind_speed_10m);
+  const windSpeedMph = Math.round(weather.current.wind_speed_10m * 0.65);
 
   // Calculate 24h total snowfall
   const snow24h = Math.round(
     weather.hourly.snowfall
       .slice(0, 24)
-      .reduce((sum: number, val: number) => sum + val, 0) * 10
+      .reduce((sum: number, val: number) => sum + val, 0) / 25.4 * 10
   ) / 10;
 
   return (
