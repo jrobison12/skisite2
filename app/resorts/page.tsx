@@ -123,13 +123,13 @@ export default async function ResortsPage() {
                           <div>
                             <p className="text-sm text-gray-500">24h Snowfall</p>
                             <p className="font-semibold">
-                              {Math.round(weather.hourly.snowfall.slice(0, 24).reduce((sum: number, val: number) => sum + val, 0) / 25.4 * 10) / 10}″
+                              {Math.round(weather.hourly.snowfall.slice(0, 24).reduce((sum: number, val: number) => sum + val, 0) * 10) / 10}″
                             </p>
                           </div>
                           <div>
                             <p className="text-sm text-gray-500">Expected Snow (24h)</p>
                             <p className="font-semibold">
-                              {Math.round(weather.hourly.snowfall.slice(24, 48).reduce((sum: number, val: number) => sum + val, 0) / 25.4 * 10) / 10}″
+                              {Math.round(weather.hourly.snowfall.slice(24, 48).reduce((sum: number, val: number) => sum + val, 0) * 10) / 10}″
                             </p>
                           </div>
                         </>

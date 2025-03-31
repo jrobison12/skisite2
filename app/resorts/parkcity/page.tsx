@@ -13,7 +13,7 @@ export default async function ParkCityResort() {
       <div className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center">
         <div className="relative w-[800px] h-[400px] opacity-5">
           <Image
-            src="/logos/park city.png"
+            src="/logos/Park City Logo.png"
             alt="Park City Resort Logo Background"
             fill
             className="object-contain"
@@ -63,7 +63,7 @@ export default async function ParkCityResort() {
                   <div>
                     <h3 className="font-bold text-xl mb-4">Snow Conditions</h3>
                     <p className="text-4xl font-bold text-blue-600">
-                      {Math.round(parkCityWeather.hourly.snowfall[0] / 25.4 * 10) / 10}″
+                      {Math.round(parkCityWeather.hourly.snowfall[0] * 10) / 10}″
                     </p>
                     <p className="text-gray-600">Fresh Snow (Last Hour)</p>
                   </div>
@@ -84,18 +84,17 @@ export default async function ParkCityResort() {
         <section className="py-16 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12">
-              <div>
+              <div className="text-center">
                 <h2 className="text-3xl font-bold mb-6">Resort Overview</h2>
                 <p className="text-gray-700 mb-4">
-                  Park City Mountain Resort, the largest ski resort in the United States, combines the 
-                  historic charm of Park City with world-class skiing and snowboarding. With 7,300 acres 
-                  of terrain, 330+ trails, and 41 lifts, it offers endless opportunities for adventure 
-                  across two mountains: Park City and Canyons Village.
+                  Park City Mountain Resort is the largest ski resort in the United States, offering an incredible 
+                  7,300 acres of terrain. With its convenient location just 35 minutes from Salt Lake City International 
+                  Airport, Park City combines world-class skiing with the charm of a historic mining town.
                 </p>
                 <div className="grid grid-cols-2 gap-6 mt-8">
                   <div>
                     <h3 className="font-bold text-lg mb-2">Elevation</h3>
-                    <p>Base: 6,900 ft</p>
+                    <p>Base: 6,800 ft</p>
                     <p>Summit: 10,026 ft</p>
                   </div>
                   <div>
@@ -111,73 +110,80 @@ export default async function ParkCityResort() {
                   <div>
                     <h3 className="font-bold text-lg mb-2">Lifts</h3>
                     <p>41 Total Lifts</p>
-                    <p>Including 1 Gondola</p>
+                    <p>4 High-Speed Six-Packs</p>
                   </div>
-                </div>
-                <div className="mt-8">
-                  <h3 className="font-bold text-lg mb-2">Trail Map</h3>
-                  <a
-                    href="https://www.parkcitymountain.com/the-mountain/about-the-mountain/trail-map.aspx"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                    </svg>
-                    View Trail Map
-                  </a>
                 </div>
               </div>
               <div>
-                <div className="relative">
+                <div className="relative text-center">
                   <h2 className="text-3xl font-bold mb-6">Featured Amenities</h2>
                   <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
-                        <h3 className="font-bold">Historic Main Street</h3>
-                        <p className="text-gray-700">Charming downtown with restaurants, shops, and après-ski activities.</p>
+                        <h3 className="font-bold">Town Access</h3>
+                        <p className="text-gray-700">Direct access to historic Park City's dining and entertainment.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
-                      <div>
-                        <h3 className="font-bold">Canyons Village</h3>
-                        <p className="text-gray-700">Modern base area with luxury lodging and dining options.</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
-                      <div>
-                        <h3 className="font-bold">High Alpine Terrain</h3>
-                        <p className="text-gray-700">Extensive above-treeline skiing with stunning views.</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">Terrain Parks</h3>
-                        <p className="text-gray-700">Multiple parks including the famous King's Crown Superpipe.</p>
+                        <p className="text-gray-700">World-class terrain parks for all skill levels.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-center">
+                      <div>
+                        <h3 className="font-bold">Mountain Dining</h3>
+                        <p className="text-gray-700">Multiple on-mountain restaurants and lodges.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-center">
+                      <div>
+                        <h3 className="font-bold">Ski School</h3>
+                        <p className="text-gray-700">Comprehensive programs for all ages and abilities.</p>
                       </div>
                     </li>
                   </ul>
-                  <div className="relative mt-8">
-                    <h3 className="font-bold text-lg mb-2">Parking</h3>
-                    <a
-                      href="https://reserve.parkatparkcitymountain.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                    >
-                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
-                      </svg>
-                      Reserve Parking
-                    </a>
-                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Trail Map and Parking Container */}
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-24">
+              {/* Trail Map Section */}
+              <div className="text-center w-full sm:w-auto">
+                <h3 className="font-bold text-lg mb-2">Trail Map</h3>
+                <a
+                  href="https://www.parkcitymountain.com/the-mountain/mountain-conditions/terrain-and-lift-status.aspx"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                  <span className="whitespace-nowrap">Trail Map</span>
+                </a>
+              </div>
+
+              {/* Parking Section */}
+              <div className="text-center">
+                <h3 className="font-bold text-lg mb-2">Parking</h3>
+                <a
+                  href="https://www.parkcitymountain.com/plan-your-trip/getting-here/parking-reservations"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                    <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
+                  </svg>
+                  <span className="whitespace-nowrap">Reserve Parking</span>
+                </a>
               </div>
             </div>
           </div>

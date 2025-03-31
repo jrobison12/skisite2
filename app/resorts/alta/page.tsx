@@ -112,7 +112,7 @@ export default function AltaResort() {
         <section className="py-16 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12">
-              <div>
+              <div className="text-center">
                 <h2 className="text-3xl font-bold mb-6">Resort Overview</h2>
                 <p className="text-gray-700 mb-4">
                   Alta is a skier's mountain, famous for its powder snow, steep terrain, and traditional skiing culture. 
@@ -141,110 +141,77 @@ export default function AltaResort() {
                     <p>5 Chairlifts</p>
                   </div>
                 </div>
-                <div className="mt-8">
-                  <h3 className="font-bold text-lg mb-2">Trail Map</h3>
-                  <a
-                    href="https://www.alta.com/plan-your-trip#maps"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                    </svg>
-                    View Trail Map
-                  </a>
-                </div>
               </div>
               <div>
-                <div className="relative">
+                <div className="relative text-center">
                   <h2 className="text-3xl font-bold mb-6">Featured Amenities</h2>
                   <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">World-Class Powder</h3>
                         <p className="text-gray-700">Experience Utah's legendary powder snow in Little Cottonwood Canyon.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">Ski School</h3>
                         <p className="text-gray-700">Professional instruction for all levels, from first-timers to experts.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">On-Mountain Dining</h3>
                         <p className="text-gray-700">Multiple lodges offering diverse dining options.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">Equipment Rentals</h3>
                         <p className="text-gray-700">High-quality ski equipment and professional fitting services.</p>
                       </div>
                     </li>
                   </ul>
-
-                  {/* Parking Section - Mobile */}
-                  <div className="block md:hidden mt-8 mb-12">
-                    <h3 className="font-bold text-lg mb-2">Parking</h3>
-                    <a
-                      href="https://www.alta.com/parking"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                    >
-                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
-                      </svg>
-                      Parking Info
-                    </a>
-                  </div>
-
-                  {/* Parking Section - Desktop */}
-                  <div className="hidden md:block absolute" style={{ top: '0', right: '-400px' }}>
-                    <h3 className="font-bold text-lg mb-2">Parking</h3>
-                    <a
-                      href="https://www.alta.com/parking"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                    >
-                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
-                      </svg>
-                      Parking Info
-                    </a>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Additional Info Section */}
-        <section className="py-16 bg-gray-50">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">Resort Information</h2>
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="font-bold text-xl mb-4">Operating Hours</h3>
-                  <p className="mb-2">Daily: 9:15 AM - 4:30 PM</p>
-                  <p className="text-gray-600">Hours may vary based on conditions and time of year</p>
-                </div>
-                <div>
-                  <h3 className="font-bold text-xl mb-4">Special Notes</h3>
-                  <p className="mb-2">Ski-only resort (no snowboarding)</p>
-                  <p className="text-gray-600">Renowned for steep terrain and deep powder</p>
-                </div>
+        {/* Trail Map and Parking Container */}
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-center items-start gap-24">
+              {/* Trail Map Section */}
+              <div className="text-center">
+                <h3 className="font-bold text-lg mb-2">Trail Map</h3>
+                <a
+                  href="https://www.alta.com/plan-your-trip#maps"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                  View Trail Map
+                </a>
+              </div>
+
+              {/* Parking Section */}
+              <div className="text-center">
+                <h3 className="font-bold text-lg mb-2">Parking</h3>
+                <a
+                  href="https://www.alta.com/parking"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                    <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
+                  </svg>
+                  Parking Info
+                </a>
               </div>
             </div>
           </div>
@@ -296,27 +263,6 @@ export default function AltaResort() {
                   Supreme Bowl
                 </h3>
                 <p>A wide-open powder paradise with multiple lines to choose from. Offers spectacular views and consistently good snow conditions.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Additional Info Section */}
-        <section className="py-16 bg-gray-50">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">Resort Information</h2>
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="font-bold text-xl mb-4">Operating Hours</h3>
-                  <p className="mb-2">Daily: 9:15 AM - 4:30 PM</p>
-                  <p className="text-gray-600">Hours may vary based on conditions and time of year</p>
-                </div>
-                <div>
-                  <h3 className="font-bold text-xl mb-4">Special Notes</h3>
-                  <p className="mb-2">Ski-only resort (no snowboarding)</p>
-                  <p className="text-gray-600">Renowned for steep terrain and deep powder</p>
-                </div>
               </div>
             </div>
           </div>

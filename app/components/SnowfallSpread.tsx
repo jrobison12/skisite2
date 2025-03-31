@@ -47,7 +47,7 @@ export default function SnowfallSpread({ days }: SnowfallSpreadProps) {
   return (
     <div className="flex overflow-x-auto pb-2 gap-4" ref={scrollContainerRef}>
       {days.map((day, index) => {
-        const hasSnowfall = day.amount > 0;
+        const hasSnowfall = day.amount > 0.05;
         return (
           <div 
             key={index} 
@@ -55,7 +55,7 @@ export default function SnowfallSpread({ days }: SnowfallSpreadProps) {
               day.isToday 
                 ? 'bg-blue-100 border-2 border-blue-500' 
                 : hasSnowfall
-                  ? 'bg-green-50'
+                  ? 'bg-green-50 border-2 border-green-500'
                   : 'bg-gray-100'
             }`}
           >
@@ -67,7 +67,7 @@ export default function SnowfallSpread({ days }: SnowfallSpreadProps) {
                   ? 'text-green-600'
                   : 'text-gray-600'
             }`}>
-              {Math.round((day.amount / 2.54) * 10) / 10}″
+              {Math.round(day.amount * 10) / 10}″
             </p>
           </div>
         );

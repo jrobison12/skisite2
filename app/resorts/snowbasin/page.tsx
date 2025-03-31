@@ -13,7 +13,7 @@ export default async function SnowbasinResort() {
       <div className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center">
         <div className="relative w-[800px] h-[400px] opacity-5">
           <Image
-            src="/logos/snowbasin-logo.png"
+            src="/logos/Snowbasin Logo.png"
             alt="Snowbasin Resort Logo Background"
             fill
             className="object-contain"
@@ -63,14 +63,14 @@ export default async function SnowbasinResort() {
                   <div>
                     <h3 className="font-bold text-xl mb-4">Snow Conditions</h3>
                     <p className="text-4xl font-bold text-blue-600">
-                      {Math.round(snowbasinWeather.hourly.snowfall[0] / 25.4 * 10) / 10}″
+                      {Math.round(snowbasinWeather.hourly.snowfall[0] * 10) / 10}″
                     </p>
                     <p className="text-gray-600">Fresh Snow (Last Hour)</p>
                   </div>
                   <div>
                     <h3 className="font-bold text-xl mb-4">Wind</h3>
                     <p className="text-4xl font-bold text-blue-600">
-                      {Math.round(snowbasinWeather.current.wind_speed_10m * 2.23694)} mph
+                      {Math.round(snowbasinWeather.current.wind_speed_10m)} mph
                     </p>
                     <p className="text-gray-600">Current Wind Speed</p>
                   </div>
@@ -84,18 +84,17 @@ export default async function SnowbasinResort() {
         <section className="py-16 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12">
-              <div>
+              <div className="text-center">
                 <h2 className="text-3xl font-bold mb-6">Resort Overview</h2>
                 <p className="text-gray-700 mb-4">
-                  Snowbasin Resort, host of the 2002 Olympic Winter Games, offers world-class skiing and 
-                  snowboarding with 3,000 acres of terrain, 104 runs, and 11 lifts. Known for its 
-                  uncrowded slopes, diverse terrain, and exceptional grooming, it provides an authentic 
-                  mountain experience.
+                  Snowbasin Resort combines world-class facilities with stunning terrain and Olympic legacy. 
+                  With 3,000 acres of diverse terrain and luxurious day lodges, Snowbasin offers an upscale 
+                  mountain experience while maintaining its authentic charm.
                 </p>
                 <div className="grid grid-cols-2 gap-6 mt-8">
                   <div>
                     <h3 className="font-bold text-lg mb-2">Elevation</h3>
-                    <p>Base: 6,391 ft</p>
+                    <p>Base: 6,450 ft</p>
                     <p>Summit: 9,350 ft</p>
                   </div>
                   <div>
@@ -104,95 +103,87 @@ export default async function SnowbasinResort() {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg mb-2">Terrain</h3>
-                    <p>10% Beginner</p>
-                    <p>30% Intermediate</p>
-                    <p>60% Advanced</p>
+                    <p>20% Beginner</p>
+                    <p>50% Intermediate</p>
+                    <p>30% Advanced</p>
                   </div>
                   <div>
                     <h3 className="font-bold text-lg mb-2">Lifts</h3>
-                    <p>11 Total Lifts</p>
-                    <p>Including 1 Gondola</p>
+                    <p>1 Tram</p>
+                    <p>11 Chairlifts</p>
                   </div>
-                </div>
-                <div className="mt-8">
-                  <h3 className="font-bold text-lg mb-2">Trail Map</h3>
-                  <a
-                    href="https://www.snowbasin.com/the-mountain/trail-maps/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                    </svg>
-                    View Trail Map
-                  </a>
                 </div>
               </div>
               <div>
-                <div className="relative">
+                <div className="relative text-center">
                   <h2 className="text-3xl font-bold mb-6">Featured Amenities</h2>
-                  <ul className="space-y-4 mb-8 md:mb-0">
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                  <ul className="space-y-4">
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">Olympic Legacy</h3>
-                        <p className="text-gray-700">Home to the 2002 Winter Olympics downhill courses.</p>
+                        <p className="text-gray-700">Home to 2002 Olympic downhill courses.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
-                        <h3 className="font-bold">Gondola Access</h3>
-                        <p className="text-gray-700">Modern gondola system for quick mountain access.</p>
+                        <h3 className="font-bold">Luxury Lodges</h3>
+                        <p className="text-gray-700">World-class day lodges with gourmet dining.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
-                        <h3 className="font-bold">Dining Excellence</h3>
-                        <p className="text-gray-700">Gourmet mountain dining with stunning views.</p>
+                        <h3 className="font-bold">Snow Sports School</h3>
+                        <p className="text-gray-700">Premier instruction for all abilities.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
-                        <h3 className="font-bold">Equipment Rentals</h3>
-                        <p className="text-gray-700">Full-service rental shop with high-quality gear.</p>
+                        <h3 className="font-bold">Terrain Parks</h3>
+                        <p className="text-gray-700">Progressive parks for all skill levels.</p>
                       </div>
                     </li>
                   </ul>
-                  <div className="block md:hidden mt-8 mb-12">
-                    <h3 className="font-bold text-lg mb-2">Parking</h3>
-                    <a
-                      href="https://www.snowbasin.com/about/getting-here/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                    >
-                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
-                      </svg>
-                      Parking Info
-                    </a>
-                  </div>
-                  <div className="hidden md:block md:absolute" style={{ top: '435px' }}>
-                    <h3 className="font-bold text-lg mb-2">Parking</h3>
-                    <a
-                      href="https://www.snowbasin.com/about/getting-here/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                    >
-                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
-                      </svg>
-                      Parking Info
-                    </a>
-                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Trail Map and Parking Container */}
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-24">
+              {/* Trail Map Section */}
+              <div className="text-center w-full sm:w-auto">
+                <h3 className="font-bold text-lg mb-2">Trail Map</h3>
+                <a
+                  href="https://www.snowbasin.com/the-mountain/trail-maps/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                  <span className="whitespace-nowrap">Trail Map</span>
+                </a>
+              </div>
+
+              {/* Parking Section */}
+              <div className="text-center w-full sm:w-auto">
+                <h3 className="font-bold text-lg mb-2">Parking</h3>
+                <a
+                  href="https://www.snowbasin.com/parking/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                    <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
+                  </svg>
+                  <span className="whitespace-nowrap">Reserve Parking</span>
+                </a>
               </div>
             </div>
           </div>

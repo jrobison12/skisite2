@@ -38,21 +38,21 @@ export default function WeatherPage() {
   }
 
   // Get all resort snowfall amounts for ranking
-  const today = new Date().toISOString().split('T')[0];
+  const currentHour = new Date().getHours();
   const allSnowfallAmounts = Object.entries(weatherData).map(([resort, data]) => {
     // Calculate 24h total snowfall (rounded to nearest 0.1 inch)
     const amount = Math.round(
       data.hourly.snowfall
-        .slice(0, 24)
-        .reduce((sum: number, val: number) => sum + val, 0) / 25.4 * 10
+        .slice(currentHour, currentHour + 24)
+        .reduce((sum: number, val: number) => sum + val, 0) * 10
     ) / 10;
 
     // Debug logging for each resort
     console.log(`${resort} 24h snowfall calculation:`, {
       resort,
-      hourlySnowfall: data.hourly.snowfall.slice(0, 24),
-      totalMM: data.hourly.snowfall.slice(0, 24).reduce((sum: number, val: number) => sum + val, 0),
-      convertedInches: amount
+      currentHour,
+      hourlySnowfall: data.hourly.snowfall.slice(currentHour, currentHour + 24),
+      totalInches: amount
     });
 
     return {
@@ -105,9 +105,13 @@ export default function WeatherPage() {
           sizes="100vw"
         />
       </div>
-      <UdotCautionBanner isPowderAlertActive={Object.values(weatherData).some(data => 
-        data.hourly.snowfall.slice(0, 24).reduce((sum: number, val: number) => sum + val, 0) > 0
-      )} />
+      <UdotCautionBanner isPowderAlertActive={Object.values(weatherData).some(data => {
+        // Convert mm to inches and check if any resort has more than 10 inches in 24h
+        const snowfallInches = data.hourly.snowfall
+          .slice(0, 24)
+          .reduce((sum: number, val: number) => sum + val, 0) / 25.4;
+        return snowfallInches >= 10;
+      })} />
       <div className="container mx-auto px-4 py-8 relative z-10">
         <h1 className="text-4xl font-bold mb-8">Resort Weather Conditions</h1>
         <p className="text-gray-600 mb-12">Current weather conditions at ski resorts near Salt Lake City. Updated in real-time to help you plan your perfect ski day.</p>

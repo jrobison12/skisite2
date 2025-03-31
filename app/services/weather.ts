@@ -118,9 +118,9 @@ export async function getResortWeather(resortName: string): Promise<WeatherData>
     // Get current date in ISO format
     const today = new Date();
     const startDate = new Date(today);
-    startDate.setDate(today.getDate() - 1);
+    startDate.setDate(today.getDate() - 3); // Get 3 days before today
     const endDate = new Date(today);
-    endDate.setDate(today.getDate() + 1);
+    endDate.setDate(today.getDate() + 3); // Get 3 days after today
 
     // Format dates for API
     const start_date = startDate.toISOString().split('T')[0];
@@ -134,10 +134,24 @@ export async function getResortWeather(resortName: string): Promise<WeatherData>
       `daily=snowfall_sum,temperature_2m_max,temperature_2m_min&` +
       `timezone=America/Denver&` +
       `start_date=${start_date}&` +
-      `end_date=${end_date}`;
+      `end_date=${end_date}&` +
+      `precipitation_unit=inch&` +
+      `snowfall_unit=inch`;
 
     const response = await fetchWithRetry(url);
     const data = await response.json();
+
+    console.log(`Raw weather data for ${resortName}:`, {
+      current: data.current,
+      hourly: {
+        snowfall: data.hourly.snowfall.slice(0, 24),
+        time: data.hourly.time.slice(0, 24)
+      },
+      daily: {
+        snowfall_sum: data.daily.snowfall_sum,
+        time: data.daily.time
+      }
+    });
 
     // Process and return only the data we need
     return {
@@ -151,10 +165,10 @@ export async function getResortWeather(resortName: string): Promise<WeatherData>
         weather_code: data.current.weather_code
       },
       hourly: {
-        temperature: data.hourly.temperature_2m.slice(0, 24), // Only keep 24 hours
-        snowfall: data.hourly.snowfall.slice(0, 24),
-        time: data.hourly.time.slice(0, 24),
-        precipitation: data.hourly.precipitation.slice(0, 24)
+        temperature: data.hourly.temperature_2m, // Get all hours
+        snowfall: data.hourly.snowfall, // Get all hours
+        time: data.hourly.time, // Get all hours
+        precipitation: data.hourly.precipitation // Get all hours
       },
       daily: {
         date: data.daily.time,

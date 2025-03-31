@@ -138,20 +138,6 @@ export default async function SnowbirdResort() {
                     <p>10 Chairlifts</p>
                   </div>
                 </div>
-                <div className="mt-8">
-                  <h3 className="font-bold text-lg mb-2">Trail Map</h3>
-                  <a
-                    href="https://www.snowbird.com/the-mountain/maps/winter-trail-map"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                    </svg>
-                    View Trail Map
-                  </a>
-                </div>
               </div>
               <div>
                 <div className="relative">
@@ -186,22 +172,47 @@ export default async function SnowbirdResort() {
                       </div>
                     </li>
                   </ul>
-                  <div className="relative mt-8">
-                    <h3 className="font-bold text-lg mb-2">Parking</h3>
-                    <a
-                      href="https://www.snowbird.com/parking/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                    >
-                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
-                      </svg>
-                      Parking Info
-                    </a>
-                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Trail Map and Parking Container */}
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-24">
+              {/* Trail Map Section */}
+              <div className="text-center w-full sm:w-auto">
+                <h3 className="font-bold text-lg mb-2">Trail Map</h3>
+                <a
+                  href="https://www.snowbird.com/trail-maps/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                  View Trail Map
+                </a>
+              </div>
+
+              {/* Parking Section */}
+              <div className="text-center">
+                <h3 className="font-bold text-lg mb-2">Parking</h3>
+                <a
+                  href="https://www.snowbird.com/parking/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                    <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
+                  </svg>
+                  Parking Info
+                </a>
               </div>
             </div>
           </div>

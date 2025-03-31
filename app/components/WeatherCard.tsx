@@ -61,24 +61,29 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
   // Find today's snowfall from daily data
   const today = new Date().toISOString().split('T')[0];
   const todayIndex = weather.daily.date.findIndex((date: string) => date === today);
-  const todaySnowfall = todayIndex !== -1 ? weather.daily.snowfall[todayIndex] / 25.4 : 0;
+  const todaySnowfall = todayIndex !== -1 ? weather.daily.snowfall[todayIndex] : 0;
 
   // Calculate 24h total snowfall (rounded to nearest 0.1 inch)
   const snow24h = Math.round(
     weather.hourly.snowfall
-      .slice(0, 24)
-      .reduce((sum: number, val: number) => sum + val, 0) / 25.4 * 10
+      .slice(currentHour, currentHour + 24)
+      .reduce((sum: number, val: number) => sum + val, 0) * 10
   ) / 10;
 
-  console.log(`${resort} snowfall data:`, {
-    today,
-    todayIndex,
-    rawSnowfall: todayIndex !== -1 ? weather.daily.snowfall[todayIndex] : 0,
-    convertedSnowfall: todaySnowfall,
-    dailyDates: weather.daily.date,
-    dailySnowfall: weather.daily.snowfall,
-    hourlySnowfall: weather.hourly.snowfall.slice(0, 24),
-    snow24h
+  // Add detailed debug logging
+  console.log(`${resort} detailed snowfall data:`, {
+    currentHour,
+    hourlySnowfall: weather.hourly.snowfall.slice(currentHour, currentHour + 24).map((val, idx) => ({
+      hour: new Date(weather.hourly.time[currentHour + idx]).toLocaleTimeString(),
+      value: val
+    })),
+    dailySnowfall: weather.daily.snowfall.map((val, idx) => ({
+      date: weather.daily.date[idx],
+      value: val
+    })),
+    snow24hCalculation: {
+      sum: snow24h
+    }
   });
 
   // Convert temperature from Celsius to Fahrenheit
@@ -120,7 +125,7 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
       )}
       <div className="relative z-10">
         {medal && (
-          <div className="absolute top-4 right-4 text-2xl z-20" title={
+          <div className="absolute -top-2 -right-2 text-2xl z-20" title={
             medal === '🥇' ? '24hr Snow Champion - Most Snow in the Last 24 Hours!' :
             medal === '🥈' ? '24hr Snow Silver Medalist - Second Most Snow in the Last 24 Hours' :
             '24hr Snow Bronze Medalist - Third Most Snow in the Last 24 Hours'
@@ -134,7 +139,7 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
           </div>
         )}
         <div className="relative">
-          <div className="absolute top-2 right-2 w-24 h-24 flex items-center justify-center">
+          <div className="absolute top-2 right-2 w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center">
             <Image
               src={getResortLogo(resort)}
               alt={`${resort} logo`}
@@ -145,17 +150,17 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
               }`}
             />
           </div>
-          <h2 className="text-2xl font-bold mb-4 pr-28">{resort}</h2>
+          <h2 className="text-2xl font-bold mb-4 pr-20 sm:pr-28">{resort}</h2>
         </div>
         
         {/* Current Conditions */}
         <div className="mb-4">
           <h3 className="text-lg font-semibold mb-2">Current Conditions</h3>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6">
             <div>
               <p className="text-sm text-gray-500">Temperature</p>
               <div className="flex items-center gap-2">
-                <p className="text-3xl font-bold text-blue-600">
+                <p className="text-2xl sm:text-3xl font-bold text-blue-600">
                   {tempF}°F
                 </p>
                 <Image
@@ -172,7 +177,7 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
             </div>
             <div>
               <p className="text-sm text-gray-500">Wind Speed</p>
-              <p className="text-3xl font-bold text-blue-600">
+              <p className="text-2xl sm:text-3xl font-bold text-blue-600">
                 {windSpeedMph} mph
               </p>
             </div>
@@ -187,8 +192,7 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
               <p className="text-sm text-gray-500">Last Hour</p>
               <p className="text-3xl font-bold text-blue-600">
                 {((value) => {
-                  const inches = value / 25.4;
-                  return inches <= 0.050 ? '0"' : `${Math.round(inches * 10) / 10}″`;
+                  return value <= 0.050 ? '0"' : `${Math.round(value * 10) / 10}″`;
                 })(weather.hourly.snowfall[0])}
               </p>
             </div>
@@ -248,8 +252,7 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
                   data={snowData}
                   title="Snowfall Forecast"
                   formatValue={(value) => {
-                    const inches = value / 2.54;
-                    return inches <= 0.050 ? '0"' : `${Math.round(inches * 10) / 10}″`;
+                    return value <= 0.050 ? '0"' : `${Math.round(value * 10) / 10}″`;
                   }}
                   currentHour={currentHour}
                   scrollRef={sharedScrollRef}
@@ -273,9 +276,10 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
               daysFromToday: number;
             }
 
-            // Get today's date at midnight
+            // Get today's date at midnight in Mountain Time
             const now = new Date();
-            const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const startOfToday = new Date(now.toLocaleString('en-US', { timeZone: 'America/Denver' }));
+            startOfToday.setHours(0, 0, 0, 0);
             
             // Create array of 7 days centered on today
             const days: DayData[] = Array.from({ length: 7 }, (_, i) => {
@@ -285,7 +289,8 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
               const dayLabel = date.toLocaleDateString('en-US', { 
                 weekday: 'short',
                 month: 'short',
-                day: 'numeric'
+                day: 'numeric',
+                timeZone: 'America/Denver'
               });
               
               return {
@@ -298,31 +303,27 @@ export default function WeatherCard({ resort, weather, medal, topThree }: Weathe
               };
             });
 
-            // Find the index for start of today in the hourly data
-            const todayStartIndex = weather.hourly.time.findIndex((timeStr: string) => 
-              new Date(timeStr).getTime() === startOfToday.getTime()
-            );
-
             // Calculate snowfall for each day
             days.forEach(day => {
-              const dayStart = new Date(day.date);
-              const dayEnd = new Date(day.date);
-              dayEnd.setDate(dayEnd.getDate() + 1);
-
-              // Find the indices for this day's data
-              const startIndex = weather.hourly.time.findIndex((timeStr: string) => 
-                new Date(timeStr) >= dayStart
-              );
-              const endIndex = weather.hourly.time.findIndex((timeStr: string) => 
-                new Date(timeStr) >= dayEnd
-              );
-
-              if (startIndex !== -1 && endIndex !== -1) {
-                day.amount = weather.hourly.snowfall
-                  .slice(startIndex, endIndex)
-                  .reduce((sum: number, val: number) => sum + val, 0);
+              const dayDate = new Date(day.date.toLocaleString('en-US', { timeZone: 'America/Denver' }))
+                .toISOString().split('T')[0];
+              const dayIndex = weather.daily.date.findIndex((date: string) => date === dayDate);
+              
+              // Debug logging
+              console.log(`${resort} - Comparing dates:`, {
+                dayDate,
+                availableDates: weather.daily.date,
+                dayIndex,
+                snowfallValue: dayIndex !== -1 ? weather.daily.snowfall[dayIndex] : 'not found'
+              });
+              
+              if (dayIndex !== -1) {
+                day.amount = weather.daily.snowfall[dayIndex];
               }
             });
+
+            // Debug final days array
+            console.log(`${resort} - Final days array:`, days);
 
             return (
               <SnowfallSpread days={days} />

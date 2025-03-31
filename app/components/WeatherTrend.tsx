@@ -105,13 +105,28 @@ export default function WeatherTrend({
             <div 
               key={index} 
               className={`text-center min-w-[4rem] rounded-lg p-2 m-0.5 ${
-                isCurrentHour ? 'bg-blue-100 ring-2 ring-blue-500' : ''
+                isCurrentHour ? 'bg-blue-100 ring-2 ring-blue-500' : 
+                title === "Snowfall Forecast" && hour.value > 0.05 ? 'bg-green-50 ring-2 ring-green-500' : ''
               }`}
+              onMouseEnter={() => {
+                if (title === "Snowfall Forecast") {
+                  console.log(`${hour.label} snowfall:`, {
+                    value: hour.value,
+                    formattedValue: formatValue(hour.value)
+                  });
+                }
+              }}
             >
-              <p className={`text-xs whitespace-nowrap ${isCurrentHour ? 'text-blue-700 font-medium' : 'text-gray-500'} mb-1`}>
+              <p className={`text-xs whitespace-nowrap ${
+                isCurrentHour ? 'text-blue-700 font-medium' : 
+                title === "Snowfall Forecast" && hour.value > 0.05 ? 'text-green-600' : 'text-gray-500'
+              } mb-1`}>
                 {hour.label}
               </p>
-              <p className={`font-semibold ${isCurrentHour ? 'text-blue-700' : 'text-gray-700'}`}>
+              <p className={`font-semibold ${
+                isCurrentHour ? 'text-blue-700' : 
+                title === "Snowfall Forecast" && hour.value > 0.05 ? 'text-green-600' : 'text-gray-700'
+              }`}>
                 {formatValue(hour.value)}
               </p>
             </div>

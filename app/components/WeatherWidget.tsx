@@ -75,7 +75,7 @@ export default function WeatherWidget({ resortName, weather }: WeatherWidgetProp
   const snow24h = Math.round(
     weather.hourly.snowfall
       .slice(0, 24)
-      .reduce((sum: number, val: number) => sum + val, 0) / 25.4 * 10
+      .reduce((sum: number, val: number) => sum + val, 0) * 10
   ) / 10;
 
   return (

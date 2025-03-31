@@ -9,7 +9,7 @@ export default function UdotCautionBanner({ isPowderAlertActive }: UdotCautionBa
   if (!isPowderAlertActive) return null;
 
   const handleClick = () => {
-    window.open('https://udot.utah.gov/connect/public/cottonwood-canyons/', '_blank');
+    window.open('https://cottonwoodcanyons.udot.utah.gov/', '_blank');
   };
 
   return (

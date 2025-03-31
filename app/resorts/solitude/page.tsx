@@ -13,7 +13,7 @@ export default async function SolitudeResort() {
       <div className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center">
         <div className="relative w-[800px] h-[400px] opacity-5">
           <Image
-            src="/logos/solitude.png"
+            src="/logos/Solitude Logo.png"
             alt="Solitude Resort Logo Background"
             fill
             className="object-contain"
@@ -63,7 +63,7 @@ export default async function SolitudeResort() {
                   <div>
                     <h3 className="font-bold text-xl mb-4">Snow Conditions</h3>
                     <p className="text-4xl font-bold text-blue-600">
-                      {Math.round(solitudeWeather.hourly.snowfall[0] / 25.4 * 10) / 10}″
+                      {Math.round(solitudeWeather.hourly.snowfall[0] * 10) / 10}″
                     </p>
                     <p className="text-gray-600">Fresh Snow (Last Hour)</p>
                   </div>
@@ -84,13 +84,12 @@ export default async function SolitudeResort() {
         <section className="py-16 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12">
-              <div>
+              <div className="text-center">
                 <h2 className="text-3xl font-bold mb-6">Resort Overview</h2>
                 <p className="text-gray-700 mb-4">
-                  Solitude Mountain Resort offers a perfect blend of beginner-friendly terrain and challenging 
-                  expert runs across 82 runs and three bowls. With an annual snowfall of 500+ inches and 2,494 
-                  feet of vertical drop, Solitude delivers a serene mountain experience with shorter lift lines 
-                  and uncrowded slopes.
+                  Solitude Mountain Resort offers a peaceful mountain experience with uncrowded slopes 
+                  and diverse terrain. Located in Big Cottonwood Canyon, Solitude combines excellent 
+                  snow conditions with a variety of terrain suitable for all skill levels.
                 </p>
                 <div className="grid grid-cols-2 gap-6 mt-8">
                   <div>
@@ -114,89 +113,77 @@ export default async function SolitudeResort() {
                     <p>1 Surface Lift</p>
                   </div>
                 </div>
-                <div className="mt-8">
-                  <h3 className="font-bold text-lg mb-2">Trail Map</h3>
-                  <a
-                    href="https://www.solitudemountain.com/-/media/Solitude/Trail-Map-PDFs/Solitude_Winter_Trail_Map_2425.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                    </svg>
-                    View Trail Map
-                  </a>
-                </div>
               </div>
               <div>
-                <div className="relative">
+                <div className="relative text-center">
                   <h2 className="text-3xl font-bold mb-6">Featured Amenities</h2>
                   <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
+                      <div>
+                        <h3 className="font-bold">Solitude Village</h3>
+                        <p className="text-gray-700">European-style village with dining and lodging.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">Nordic Center</h3>
                         <p className="text-gray-700">Cross-country skiing and snowshoeing trails.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
                         <h3 className="font-bold">Ski School</h3>
-                        <p className="text-gray-700">Professional instruction for all skill levels.</p>
+                        <p className="text-gray-700">Professional instruction for all abilities.</p>
                       </div>
                     </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
+                    <li className="flex items-center justify-center">
                       <div>
-                        <h3 className="font-bold">Village Dining</h3>
-                        <p className="text-gray-700">Multiple dining options in the base village.</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">•</span>
-                      <div>
-                        <h3 className="font-bold">Equipment Rentals</h3>
-                        <p className="text-gray-700">Full-service rental shop with quality gear.</p>
+                        <h3 className="font-bold">Ice Skating</h3>
+                        <p className="text-gray-700">Outdoor rink in the heart of the village.</p>
                       </div>
                     </li>
                   </ul>
-
-                  {/* Parking Section - Mobile */}
-                  <div className="block md:hidden mt-8 mb-12">
-                    <h3 className="font-bold text-lg mb-2">Parking</h3>
-                    <a
-                      href="https://reservenski.parksolitude.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                    >
-                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
-                      </svg>
-                      Reserve Parking
-                    </a>
-                  </div>
-
-                  {/* Parking Section - Desktop */}
-                  <div className="hidden md:block absolute" style={{ top: '0', right: '-400px' }}>
-                    <h3 className="font-bold text-lg mb-2">Parking</h3>
-                    <a
-                      href="https://reservenski.parksolitude.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                    >
-                      <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
-                      </svg>
-                      Reserve Parking
-                    </a>
-                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Trail Map and Parking Container */}
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-24">
+              {/* Trail Map Section */}
+              <div className="text-center w-full sm:w-auto">
+                <h3 className="font-bold text-lg mb-2">Trail Map</h3>
+                <a
+                  href="https://www.solitudemountain.com/mountain/trail-map"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                  <span className="whitespace-nowrap">Trail Map</span>
+                </a>
+              </div>
+
+              {/* Parking Section */}
+              <div className="text-center">
+                <h3 className="font-bold text-lg mb-2">Parking</h3>
+                <a
+                  href="https://reservenski.parksolitude.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                    <text x="12" y="16" textAnchor="middle" fill="currentColor" fontSize="12" fontWeight="bold">P</text>
+                  </svg>
+                  <span className="whitespace-nowrap">Reserve Parking</span>
+                </a>
               </div>
             </div>
           </div>
